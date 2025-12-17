@@ -1,0 +1,45 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+#*.out
+.coverage.out
+___goCloudK8sThingServer_test_go.test
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+/.env
+/goCloudK8sThing.conf
+.idea
+/openapitools.json
+/coverage.out
+/.env_testing
+/go_cloud_k8s_thing_testing.conf
+/postgRest/thing_postgrest.conf
+/documentation/design+microservices+v2.pdf
+/cmd/goCloudK8sThingServer/goCloudK8sThingFront/openapitools.json
+/cmd/goCloudK8sThingServer/typescript-axios-client-generated.zip
+/cmd/goCloudK8sThingServer/goCloudK8sThingFront/graphics/Google_Maps_pin.svg
+/cmd/goCloudK8sThingServer/goCloudK8sThingFront/graphics/Googlemap.svg
+/cmd/goCloudK8sThingServer/goCloudK8sThingFront/graphics/map-marker-pin-3d.svg
+/cmd/goCloudK8sThingServer/goCloudK8sThingFront/graphics/Map-Warning-Icon.svg
+/cmd/goCloudK8sThingServer/openapitools.json
+.env_go_cloud_k8s_thing
+/deployments/go-testing/myLocalConfigMap.yaml
+/deployments/go-testing/soiConfigMap.yaml
+/bin/goCloudK8sThingServer
+/.env-testing-export
+/.env_for_github.txt
+/cmd/goCloudK8sThingServer/goCloudK8sThingFront/old/oldLogin_to_delete.ts
+/bin/server
+/cmd/goCloudK8sThingServer/goCloudK8sThingFront/node_modules*
+**/node_modules
+proto_third_party/*
+/coverage.txt

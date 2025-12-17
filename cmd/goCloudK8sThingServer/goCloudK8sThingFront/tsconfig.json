@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "allowJs": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node", // maybe try bundler later
+    "resolveJsonModule": true,
+    "types": [
+      "vite/client",
+      "node"
+    ],
+    "useDefineForClassFields": true,
+    "strict": true,
+    "jsx": "preserve",
+    "noEmit": true,
+    "noImplicitAny": false,
+    "strictNullChecks": false,  // maybe pass to true
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "noUnusedLocals": true,
+    "esModuleInterop": true,
+    "lib": [
+      "DOM",
+      "ESNext"
+    ],
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "cypress"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}
