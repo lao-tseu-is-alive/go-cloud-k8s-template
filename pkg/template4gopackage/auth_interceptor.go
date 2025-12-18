@@ -1,5 +1,5 @@
-// Package template_4_your_project_name provides Connect RPC authentication interceptor.
-package template_4_your_project_name
+// Package template4gopackage provides Connect RPC authentication interceptor.
+package template4gopackage
 
 import (
 	"context"
@@ -32,7 +32,7 @@ const (
 // Usage:
 //
 //	interceptors := connect.WithInterceptors(NewAuthInterceptor(jwtCheck, log))
-//	handler := template_4_your_project_namev1connect.Newtemplate4YourProjectNameServiceHandler(server, interceptors)
+//	handler := template4gopackagev1connect.NewTemplate4ServiceNameServiceHandler(server, interceptors)
 func NewAuthInterceptor(jwtCheck goHttpEcho.JwtChecker, log *slog.Logger) connect.UnaryInterceptorFunc {
 	return func(next connect.UnaryFunc) connect.UnaryFunc {
 		return func(ctx context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {

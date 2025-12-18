@@ -1,5 +1,5 @@
-// Package template_4_your_project_name provides Connect RPC handlers for the template4YourProjectNameService.
-package template_4_your_project_name
+// Package template_4_your_project_name provides Connect RPC handlers for the Template4ServiceNameService.
+package template4gopackage
 
 import (
 	"context"
@@ -13,20 +13,20 @@ import (
 	"github.com/your-github-account/template-4-your-project-name/gen/template_4_your_project_name/v1/template_4_your_project_namev1connect"
 )
 
-// template4YourProjectNameConnectServer implements the template4YourProjectNameServiceHandler interface.
+// Template4ServiceNameConnectServer implements the Template4ServiceNameServiceHandler interface.
 // Authentication is handled by the AuthInterceptor, which injects user info into context.
-type template4YourProjectNameConnectServer struct {
+type Template4ServiceNameConnectServer struct {
 	BusinessService *BusinessService
 	Log             *slog.Logger
 
 	// Embed the unimplemented handler for forward compatibility
-	template_4_your_project_namev1connect.Unimplementedtemplate4YourProjectNameServiceHandler
+	template_4_your_project_namev1connect.UnimplementedTemplate4ServiceNameServiceHandler
 }
 
-// Newtemplate4YourProjectNameConnectServer creates a new template4YourProjectNameConnectServer.
+// NewTemplate4ServiceNameConnectServer creates a new Template4ServiceNameConnectServer.
 // Note: Authentication is handled by the AuthInterceptor, not by this server.
-func Newtemplate4YourProjectNameConnectServer(business *BusinessService, log *slog.Logger) *template4YourProjectNameConnectServer {
-	return &template4YourProjectNameConnectServer{
+func NewTemplate4ServiceNameConnectServer(business *BusinessService, log *slog.Logger) *Template4ServiceNameConnectServer {
+	return &Template4ServiceNameConnectServer{
 		BusinessService: business,
 		Log:             log,
 	}
@@ -37,11 +37,11 @@ func Newtemplate4YourProjectNameConnectServer(business *BusinessService, log *sl
 // =============================================================================
 
 // mapErrorToConnect converts business errors to Connect errors
-func (s *template4YourProjectNameConnectServer) mapErrorToConnect(err error) *connect.Error {
+func (s *Template4ServiceNameConnectServer) mapErrorToConnect(err error) *connect.Error {
 	switch {
 	case errors.Is(err, ErrNotFound):
 		return connect.NewError(connect.CodeNotFound, err)
-	case errors.Is(err, ErrTypetemplate4YourProjectNameNotFound):
+	case errors.Is(err, ErrTypeTemplate4ServiceNameNotFound):
 		return connect.NewError(connect.CodeNotFound, err)
 	case errors.Is(err, ErrAlreadyExists):
 		return connect.NewError(connect.CodeAlreadyExists, err)
@@ -50,7 +50,7 @@ func (s *template4YourProjectNameConnectServer) mapErrorToConnect(err error) *co
 	case errors.Is(err, ErrNotOwner):
 		return connect.NewError(connect.CodePermissionDenied, err)
 	case errors.Is(err, ErrAdminRequired):
-		return connect.NewError(connect.CodePermissionDenied, errors.New(OnlyAdminCanManageTypetemplate4YourProjectNames))
+		return connect.NewError(connect.CodePermissionDenied, errors.New(OnlyAdminCanManageTypeTemplate4ServiceNames))
 	case errors.Is(err, ErrInvalidInput):
 		return connect.NewError(connect.CodeInvalidArgument, err)
 	case errors.Is(err, pgx.ErrNoRows):
@@ -62,11 +62,11 @@ func (s *template4YourProjectNameConnectServer) mapErrorToConnect(err error) *co
 }
 
 // =============================================================================
-// template4YourProjectNameService RPC Methods
+// Template4ServiceNameService RPC Methods
 // =============================================================================
 
 // List returns a list of template_4_your_project_names
-func (s *template4YourProjectNameConnectServer) List(
+func (s *Template4ServiceNameConnectServer) List(
 	ctx context.Context,
 	req *connect.Request[template_4_your_project_namev1.ListRequest],
 ) (*connect.Response[template_4_your_project_namev1.ListResponse], error) {
@@ -110,13 +110,13 @@ func (s *template4YourProjectNameConnectServer) List(
 
 	// Convert to proto and return
 	response := &template_4_your_project_namev1.ListResponse{
-		template4YourProjectNames: Domaintemplate4YourProjectNameListSliceToProto(list),
+		Template4ServiceNames: DomainTemplate4ServiceNameListSliceToProto(list),
 	}
 	return connect.NewResponse(response), nil
 }
 
 // Create creates a new template_4_your_project_name
-func (s *template4YourProjectNameConnectServer) Create(
+func (s *Template4ServiceNameConnectServer) Create(
 	ctx context.Context,
 	req *connect.Request[template_4_your_project_namev1.CreateRequest],
 ) (*connect.Response[template_4_your_project_namev1.CreateResponse], error) {
@@ -127,31 +127,31 @@ func (s *template4YourProjectNameConnectServer) Create(
 	s.Log.Info("Create", "userId", userId)
 
 	// Convert proto to domain
-	prototemplate4YourProjectName := req.Msg.template4YourProjectName
-	if prototemplate4YourProjectName == nil {
+	protoTemplate4ServiceName := req.Msg.Template4ServiceName
+	if protoTemplate4ServiceName == nil {
 		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("template_4_your_project_name is required"))
 	}
 
-	domaintemplate4YourProjectName, err := Prototemplate4YourProjectNameToDomain(prototemplate4YourProjectName)
+	domainTemplate4ServiceName, err := ProtoTemplate4ServiceNameToDomain(protoTemplate4ServiceName)
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
 	// Call business logic
-	createdtemplate4YourProjectName, err := s.BusinessService.Create(ctx, userId, *domaintemplate4YourProjectName)
+	createdTemplate4ServiceName, err := s.BusinessService.Create(ctx, userId, *domainTemplate4ServiceName)
 	if err != nil {
 		return nil, s.mapErrorToConnect(err)
 	}
 
 	// Convert back to proto
 	response := &template_4_your_project_namev1.CreateResponse{
-		template4YourProjectName: Domaintemplate4YourProjectNameToProto(createdtemplate4YourProjectName),
+		Template4ServiceName: DomainTemplate4ServiceNameToProto(createdTemplate4ServiceName),
 	}
 	return connect.NewResponse(response), nil
 }
 
 // Get retrieves a template_4_your_project_name by ID
-func (s *template4YourProjectNameConnectServer) Get(
+func (s *Template4ServiceNameConnectServer) Get(
 	ctx context.Context,
 	req *connect.Request[template_4_your_project_namev1.GetRequest],
 ) (*connect.Response[template_4_your_project_namev1.GetResponse], error) {
@@ -174,13 +174,13 @@ func (s *template4YourProjectNameConnectServer) Get(
 	}
 
 	response := &template_4_your_project_namev1.GetResponse{
-		template4YourProjectName: Domaintemplate4YourProjectNameToProto(template_4_your_project_name),
+		Template4ServiceName: DomainTemplate4ServiceNameToProto(template_4_your_project_name),
 	}
 	return connect.NewResponse(response), nil
 }
 
 // Update updates a template_4_your_project_name
-func (s *template4YourProjectNameConnectServer) Update(
+func (s *Template4ServiceNameConnectServer) Update(
 	ctx context.Context,
 	req *connect.Request[template_4_your_project_namev1.UpdateRequest],
 ) (*connect.Response[template_4_your_project_namev1.UpdateResponse], error) {
@@ -197,30 +197,30 @@ func (s *template4YourProjectNameConnectServer) Update(
 	}
 
 	// Convert proto to domain
-	prototemplate4YourProjectName := req.Msg.template4YourProjectName
-	if prototemplate4YourProjectName == nil {
+	protoTemplate4ServiceName := req.Msg.Template4ServiceName
+	if protoTemplate4ServiceName == nil {
 		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("template_4_your_project_name data is required"))
 	}
 
-	domaintemplate4YourProjectName, err := Prototemplate4YourProjectNameToDomain(prototemplate4YourProjectName)
+	domainTemplate4ServiceName, err := ProtoTemplate4ServiceNameToDomain(protoTemplate4ServiceName)
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
 	// Call business logic
-	updatedtemplate4YourProjectName, err := s.BusinessService.Update(ctx, userId, template_4_your_project_nameId, *domaintemplate4YourProjectName)
+	updatedTemplate4ServiceName, err := s.BusinessService.Update(ctx, userId, template_4_your_project_nameId, *domainTemplate4ServiceName)
 	if err != nil {
 		return nil, s.mapErrorToConnect(err)
 	}
 
 	response := &template_4_your_project_namev1.UpdateResponse{
-		template4YourProjectName: Domaintemplate4YourProjectNameToProto(updatedtemplate4YourProjectName),
+		Template4ServiceName: DomainTemplate4ServiceNameToProto(updatedTemplate4ServiceName),
 	}
 	return connect.NewResponse(response), nil
 }
 
 // Delete deletes a template_4_your_project_name
-func (s *template4YourProjectNameConnectServer) Delete(
+func (s *Template4ServiceNameConnectServer) Delete(
 	ctx context.Context,
 	req *connect.Request[template_4_your_project_namev1.DeleteRequest],
 ) (*connect.Response[template_4_your_project_namev1.DeleteResponse], error) {
@@ -246,7 +246,7 @@ func (s *template4YourProjectNameConnectServer) Delete(
 }
 
 // Search returns template_4_your_project_names based on search criteria
-func (s *template4YourProjectNameConnectServer) Search(
+func (s *Template4ServiceNameConnectServer) Search(
 	ctx context.Context,
 	req *connect.Request[template_4_your_project_namev1.SearchRequest],
 ) (*connect.Response[template_4_your_project_namev1.SearchResponse], error) {
@@ -289,13 +289,13 @@ func (s *template4YourProjectNameConnectServer) Search(
 	}
 
 	response := &template_4_your_project_namev1.SearchResponse{
-		template4YourProjectNames: Domaintemplate4YourProjectNameListSliceToProto(list),
+		Template4ServiceNames: DomainTemplate4ServiceNameListSliceToProto(list),
 	}
 	return connect.NewResponse(response), nil
 }
 
 // Count returns the number of template_4_your_project_names
-func (s *template4YourProjectNameConnectServer) Count(
+func (s *Template4ServiceNameConnectServer) Count(
 	ctx context.Context,
 	req *connect.Request[template_4_your_project_namev1.CountRequest],
 ) (*connect.Response[template_4_your_project_namev1.CountResponse], error) {
@@ -335,7 +335,7 @@ func (s *template4YourProjectNameConnectServer) Count(
 }
 
 // GeoJson returns a GeoJSON representation of template_4_your_project_names
-func (s *template4YourProjectNameConnectServer) GeoJson(
+func (s *Template4ServiceNameConnectServer) GeoJson(
 	ctx context.Context,
 	req *connect.Request[template_4_your_project_namev1.GeoJsonRequest],
 ) (*connect.Response[template_4_your_project_namev1.GeoJsonResponse], error) {
@@ -381,7 +381,7 @@ func (s *template4YourProjectNameConnectServer) GeoJson(
 }
 
 // ListByExternalId returns template_4_your_project_names filtered by external ID
-func (s *template4YourProjectNameConnectServer) ListByExternalId(
+func (s *Template4ServiceNameConnectServer) ListByExternalId(
 	ctx context.Context,
 	req *connect.Request[template_4_your_project_namev1.ListByExternalIdRequest],
 ) (*connect.Response[template_4_your_project_namev1.ListByExternalIdResponse], error) {
@@ -412,7 +412,7 @@ func (s *template4YourProjectNameConnectServer) ListByExternalId(
 	}
 
 	response := &template_4_your_project_namev1.ListByExternalIdResponse{
-		template4YourProjectNames: Domaintemplate4YourProjectNameListSliceToProto(list),
+		Template4ServiceNames: DomainTemplate4ServiceNameListSliceToProto(list),
 	}
 	return connect.NewResponse(response), nil
 }

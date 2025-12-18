@@ -1,7 +1,7 @@
-package template_4_your_project_name
+package template4gopackage
 
 const (
-	basetemplate4YourProjectNameListQuery = `
+	baseTemplate4ServiceNameListQuery = `
 SELECT 
        id,
        type_id,
@@ -19,19 +19,19 @@ FROM template_4_your_project_name_db_schema.template_4_your_project_name
 WHERE _deleted = false AND position IS NOT NULL
 `
 	template_4_your_project_nameListOrderBy = " ORDER BY _created_at DESC LIMIT $1 OFFSET $2;"
-	listtemplate4YourProjectNamesConditions = `
+	listTemplate4ServiceNamesConditions     = `
  AND type_id = coalesce($3, type_id)
  AND _created_by = coalesce($4, _created_by)
  AND inactivated = coalesce($5, inactivated) 
 `
-	listByExternalIdtemplate4YourProjectNamesCondition = " AND external_id = $3 "
-	searchtemplate4YourProjectNamesConditions          = `
+	listByExternalIdTemplate4ServiceNamesCondition = " AND external_id = $3 "
+	searchTemplate4ServiceNamesConditions          = `
  AND type_id = coalesce($3, type_id)
  AND _created_by = coalesce($4, _created_by)
  AND inactivated = coalesce($5, inactivated)
  AND text_search @@ plainto_tsquery('french', unaccent($6))
 `
-	createtemplate4YourProjectName = `
+	createTemplate4ServiceName = `
 INSERT INTO template_4_your_project_name_db_schema.template_4_your_project_name
 (id, type_id, name, description, comment, external_id, external_ref,
  build_at, status, contained_by, contained_by_old,validated, validated_time, validated_by,
@@ -45,7 +45,7 @@ VALUES ($1, $2, $3, $4, $5, $6, $7,
         ST_SetSRID(ST_MakePoint($18,$19), 2056));
 `
 
-	gettemplate4YourProjectName = `SELECT id,
+	getTemplate4ServiceName = `SELECT id,
        type_id,
        name,
        description,
@@ -77,18 +77,18 @@ VALUES ($1, $2, $3, $4, $5, $6, $7,
 FROM template_4_your_project_name_db_schema.template_4_your_project_name
 WHERE id = $1;
 `
-	existtemplate4YourProjectName        = `SELECT COUNT(*) FROM template_4_your_project_name_db_schema.template_4_your_project_name WHERE id = $1;`
-	isActivetemplate4YourProjectName     = `SELECT COUNT(*) FROM template_4_your_project_name_db_schema.template_4_your_project_name WHERE inactivated=false AND id = $1;`
-	existtemplate4YourProjectNameOwnedBy = `SELECT COUNT(*) FROM template_4_your_project_name_db_schema.template_4_your_project_name WHERE id = $1 AND _created_by = $2;`
-	counttemplate4YourProjectName        = `SELECT COUNT(*) FROM template_4_your_project_name_db_schema.template_4_your_project_name `
-	deletetemplate4YourProjectName       = `
+	existTemplate4ServiceName        = `SELECT COUNT(*) FROM template_4_your_project_name_db_schema.template_4_your_project_name WHERE id = $1;`
+	isActiveTemplate4ServiceName     = `SELECT COUNT(*) FROM template_4_your_project_name_db_schema.template_4_your_project_name WHERE inactivated=false AND id = $1;`
+	existTemplate4ServiceNameOwnedBy = `SELECT COUNT(*) FROM template_4_your_project_name_db_schema.template_4_your_project_name WHERE id = $1 AND _created_by = $2;`
+	countTemplate4ServiceName        = `SELECT COUNT(*) FROM template_4_your_project_name_db_schema.template_4_your_project_name `
+	deleteTemplate4ServiceName       = `
 UPDATE template_4_your_project_name_db_schema.template_4_your_project_name
 SET
     _deleted = true,
     _deleted_by = $1,
     _deleted_at = CURRENT_TIMESTAMP
 WHERE id = $2;`
-	updatetemplate4YourProjectName = `
+	updateTemplate4ServiceName = `
 UPDATE template_4_your_project_name_db_schema.template_4_your_project_name SET
        type_id = $2,
        name = $3,
@@ -118,7 +118,7 @@ UPDATE template_4_your_project_name_db_schema.template_4_your_project_name SET
 WHERE id = $1;
 `
 
-	baseGeoJsontemplate4YourProjectNameSearch = `
+	baseGeoJsonTemplate4ServiceNameSearch = `
 SELECT row_to_json(fc)
 FROM (SELECT 'FeatureCollection'                         AS type,
              coalesce(array_to_json(array_agg(f)), '[]') AS features

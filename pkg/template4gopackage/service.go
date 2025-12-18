@@ -1,4 +1,4 @@
-package template_4_your_project_name
+package template4gopackage
 
 import (
 	"errors"
@@ -22,7 +22,7 @@ const (
 	D                   // Delete only
 	C                   // Create only (Insert, Post)
 	P                   // change Permissions of one template_4_your_project_name
-	O                   // change Owner of one template4YourProjectName
+	O                   // change Owner of one Template4ServiceName
 	A                   // Audit log of changes of one template_4_your_project_name and read only special _fields like _created_by
 )
 
@@ -110,7 +110,7 @@ func (s Service) List(ctx echo.Context, params ListParams) error {
 		if !errors.Is(err, pgx.ErrNoRows) {
 			return echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("there was a problem when calling store.List :%v", err))
 		} else {
-			list = make([]*template4YourProjectNameList, 0)
+			list = make([]*Template4ServiceNameList, 0)
 			return ctx.JSON(http.StatusOK, list)
 		}
 	}
@@ -127,40 +127,40 @@ func (s Service) Create(ctx echo.Context) error {
 	currentUserId := claims.User.UserId
 	s.Log.Info("handler called", "handler", handlerName, "userId", currentUserId)
 	/* TODO implement ACL & RBAC handling
-	if !s.Store.IsUserAllowedToCreate(currentUserId, typetemplate4YourProjectName) {
+	if !s.Store.IsUserAllowedToCreate(currentUserId, typeTemplate4ServiceName) {
 		return echo.NewHTTPError(http.StatusUnauthorized, "current user has no create role privilege")
 	}
 	*/
-	newtemplate4YourProjectName := &template4YourProjectName{
+	newTemplate4ServiceName := &Template4ServiceName{
 		CreatedBy: int32(currentUserId),
 	}
-	if err := ctx.Bind(newtemplate4YourProjectName); err != nil {
+	if err := ctx.Bind(newTemplate4ServiceName); err != nil {
 		msg := fmt.Sprintf("Create has invalid format [%v]", err)
 		s.Log.Error(msg)
 		return ctx.JSON(http.StatusBadRequest, msg)
 	}
-	s.Log.Info("Create template4YourProjectName Bind ok", "template_4_your_project_name", newtemplate4YourProjectName.Name)
-	if len(strings.Trim(newtemplate4YourProjectName.Name, " ")) < 1 {
+	s.Log.Info("Create Template4ServiceName Bind ok", "template_4_your_project_name", newTemplate4ServiceName.Name)
+	if len(strings.Trim(newTemplate4ServiceName.Name, " ")) < 1 {
 
 		msg := fmt.Sprintf(FieldCannotBeEmpty, "name")
 		s.Log.Error(msg)
 		return ctx.JSON(http.StatusBadRequest, msg)
 	}
-	if len(newtemplate4YourProjectName.Name) < MinNameLength {
+	if len(newTemplate4ServiceName.Name) < MinNameLength {
 		msg := fmt.Sprintf(FieldMinLengthIsN, "name", MinNameLength)
 		s.Log.Error(msg)
 		return ctx.JSON(http.StatusBadRequest, msg)
 	}
 	// Use request context for cancellation and tracing support
 	reqCtx := ctx.Request().Context()
-	if s.Store.Exist(reqCtx, newtemplate4YourProjectName.Id) {
-		msg := fmt.Sprintf("This id (%v) already exist !", newtemplate4YourProjectName.Id)
+	if s.Store.Exist(reqCtx, newTemplate4ServiceName.Id) {
+		msg := fmt.Sprintf("This id (%v) already exist !", newTemplate4ServiceName.Id)
 		s.Log.Error(msg)
 		return ctx.JSON(http.StatusBadRequest, msg)
 	}
-	template_4_your_project_nameCreated, err := s.Store.Create(reqCtx, *newtemplate4YourProjectName)
+	template_4_your_project_nameCreated, err := s.Store.Create(reqCtx, *newTemplate4ServiceName)
 	if err != nil {
-		msg := fmt.Sprintf("Create had an error saving template_4_your_project_name:%#v, err:%#v", *newtemplate4YourProjectName, err)
+		msg := fmt.Sprintf("Create had an error saving template_4_your_project_name:%#v, err:%#v", *newTemplate4ServiceName, err)
 		s.Log.Info(msg)
 		return ctx.JSON(http.StatusBadRequest, msg)
 	}
@@ -179,11 +179,11 @@ func (s Service) Count(ctx echo.Context, params CountParams) error {
 	s.Log.Info("handler called", "handler", handlerName, "userId", currentUserId)
 	// Use request context for cancellation and tracing support
 	reqCtx := ctx.Request().Context()
-	numtemplate4YourProjectNames, err := s.Store.Count(reqCtx, params)
+	numTemplate4ServiceNames, err := s.Store.Count(reqCtx, params)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("problem counting template_4_your_project_names :%v", err))
 	}
-	return ctx.JSON(http.StatusOK, numtemplate4YourProjectNames)
+	return ctx.JSON(http.StatusOK, numTemplate4ServiceNames)
 }
 
 // Delete will remove the given template_4_your_project_nameId entry from the store, and if not present will return 400 Bad Request
@@ -208,7 +208,7 @@ func (s Service) Delete(ctx echo.Context, template_4_your_project_nameId uuid.UU
 		return echo.NewHTTPError(http.StatusUnauthorized, "current user is not owner of this template_4_your_project_name")
 	}
 	/* TODO implement ACL & RBAC handling
-	if !s.Store.IsUserAllowedToDelete(currentUserId, typetemplate4YourProjectName) {
+	if !s.Store.IsUserAllowedToDelete(currentUserId, typeTemplate4ServiceName) {
 		return echo.NewHTTPError(http.StatusUnauthorized, "current user has no create role privilege")
 	}
 	*/
@@ -222,7 +222,7 @@ func (s Service) Delete(ctx echo.Context, template_4_your_project_nameId uuid.UU
 
 }
 
-// Get will retrieve the template4YourProjectName with the given id in the store and return it
+// Get will retrieve the Template4ServiceName with the given id in the store and return it
 // curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" 'http://localhost:9090/goapi/v1/template_4_your_project_name/9999971f-53d7-4eb6-8898-97f257ea5f27' |jq
 func (s Service) Get(ctx echo.Context, template_4_your_project_nameId uuid.UUID) error {
 	handlerName := "Get"
@@ -239,7 +239,7 @@ func (s Service) Get(ctx echo.Context, template_4_your_project_nameId uuid.UUID)
 		return ctx.JSON(http.StatusNotFound, msg)
 	}
 	/* TODO implement ACL & RBAC handling
-	if !s.Store.IsUserAllowedToGet(currentUserId, typetemplate4YourProjectName) {
+	if !s.Store.IsUserAllowedToGet(currentUserId, typeTemplate4ServiceName) {
 		return echo.NewHTTPError(http.StatusUnauthorized, "current user has no create role privilege")
 	}
 	*/
@@ -276,34 +276,34 @@ func (s Service) Update(ctx echo.Context, template_4_your_project_nameId uuid.UU
 		return echo.NewHTTPError(http.StatusUnauthorized, "current user is not owner of this template_4_your_project_name")
 	}
 	/* TODO implement ACL & RBAC handling
-	if !s.Store.IsUserAllowedToUpdate(currentUserId, typetemplate4YourProjectName) {
+	if !s.Store.IsUserAllowedToUpdate(currentUserId, typeTemplate4ServiceName) {
 		return echo.NewHTTPError(http.StatusUnauthorized, "current user has no create role privilege")
 	}
 	*/
 
-	updatetemplate4YourProjectName := new(template4YourProjectName)
-	if err := ctx.Bind(updatetemplate4YourProjectName); err != nil {
+	updateTemplate4ServiceName := new(Template4ServiceName)
+	if err := ctx.Bind(updateTemplate4ServiceName); err != nil {
 		msg := fmt.Sprintf("Update has invalid format error:[%v]", err)
 		s.Log.Error(msg)
 		return ctx.JSON(http.StatusBadRequest, msg)
 	}
-	if len(strings.Trim(updatetemplate4YourProjectName.Name, " ")) < 1 {
+	if len(strings.Trim(updateTemplate4ServiceName.Name, " ")) < 1 {
 		msg := fmt.Sprintf(FieldCannotBeEmpty, "name")
 		s.Log.Error(msg)
 		return ctx.JSON(http.StatusBadRequest, msg)
 	}
-	if len(updatetemplate4YourProjectName.Name) < MinNameLength {
+	if len(updateTemplate4ServiceName.Name) < MinNameLength {
 
-		msg := fmt.Sprintf(FieldMinLengthIsN+FoundNum, "name", MinNameLength, len(updatetemplate4YourProjectName.Name))
+		msg := fmt.Sprintf(FieldMinLengthIsN+FoundNum, "name", MinNameLength, len(updateTemplate4ServiceName.Name))
 		s.Log.Error(msg)
 		return ctx.JSON(http.StatusBadRequest, msg)
 	}
-	updatetemplate4YourProjectName.LastModifiedBy = &currentUserId
+	updateTemplate4ServiceName.LastModifiedBy = &currentUserId
 	//TODO handle update of validated field correctly by adding validated time & user
 	// handle update of managed_by field correctly by checking if user is a valid active one
-	template_4_your_project_nameUpdated, err := s.Store.Update(reqCtx, template_4_your_project_nameId, *updatetemplate4YourProjectName)
+	template_4_your_project_nameUpdated, err := s.Store.Update(reqCtx, template_4_your_project_nameId, *updateTemplate4ServiceName)
 	if err != nil {
-		msg := fmt.Sprintf("Update had an error saving template_4_your_project_name:%#v, err:%#v", *updatetemplate4YourProjectName, err)
+		msg := fmt.Sprintf("Update had an error saving template_4_your_project_name:%#v, err:%#v", *updateTemplate4ServiceName, err)
 		s.Log.Info(msg)
 		return ctx.JSON(http.StatusBadRequest, msg)
 	}
@@ -335,7 +335,7 @@ func (s Service) ListByExternalId(ctx echo.Context, externalId int32, params Lis
 		if !errors.Is(err, pgx.ErrNoRows) {
 			return echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("there was a problem when calling store.ListByExternalId :%v", err))
 		} else {
-			list = make([]*template4YourProjectNameList, 0)
+			list = make([]*Template4ServiceNameList, 0)
 			return ctx.JSON(http.StatusNotFound, list)
 		}
 	}
@@ -365,7 +365,7 @@ func (s Service) Search(ctx echo.Context, params SearchParams) error {
 	list, err := s.Store.Search(reqCtx, offset, limit, params)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
-			list = make([]*template4YourProjectNameList, 0)
+			list = make([]*Template4ServiceNameList, 0)
 			return ctx.JSON(http.StatusOK, list)
 		} else {
 			return echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("there was a problem when calling store.Search :%v", err))
@@ -374,9 +374,9 @@ func (s Service) Search(ctx echo.Context, params SearchParams) error {
 	return ctx.JSON(http.StatusOK, list)
 }
 
-// Typetemplate4YourProjectNameList sends a list of Typetemplate4YourProjectName based on the given Typetemplate4YourProjectNameListParams parameters filters
-func (s Service) Typetemplate4YourProjectNameList(ctx echo.Context, params Typetemplate4YourProjectNameListParams) error {
-	handlerName := "Typetemplate4YourProjectNameList"
+// TypeTemplate4ServiceNameList sends a list of TypeTemplate4ServiceName based on the given TypeTemplate4ServiceNameListParams parameters filters
+func (s Service) TypeTemplate4ServiceNameList(ctx echo.Context, params TypeTemplate4ServiceNameListParams) error {
+	handlerName := "TypeTemplate4ServiceNameList"
 	goHttpEcho.TraceHttpRequest(handlerName, ctx.Request(), s.Log)
 	// get the current user from JWT TOKEN
 	claims := s.Server.JwtCheck.GetJwtCustomClaimsFromContext(ctx)
@@ -392,30 +392,30 @@ func (s Service) Typetemplate4YourProjectNameList(ctx echo.Context, params Typet
 	}
 	// Use request context for cancellation and tracing support
 	reqCtx := ctx.Request().Context()
-	list, err := s.Store.ListTypetemplate4YourProjectName(reqCtx, offset, limit, params)
+	list, err := s.Store.ListTypeTemplate4ServiceName(reqCtx, offset, limit, params)
 	if err != nil {
 		if !errors.Is(err, pgx.ErrNoRows) {
-			return ctx.JSON(http.StatusInternalServerError, fmt.Sprintf("there was a problem when calling store.ListTypetemplate4YourProjectName :%v", err))
+			return ctx.JSON(http.StatusInternalServerError, fmt.Sprintf("there was a problem when calling store.ListTypeTemplate4ServiceName :%v", err))
 		} else {
-			list = make([]*Typetemplate4YourProjectNameList, 0)
+			list = make([]*TypeTemplate4ServiceNameList, 0)
 			return ctx.JSON(http.StatusNotFound, list)
 		}
 	}
 	return ctx.JSON(http.StatusOK, list)
 }
 
-// Typetemplate4YourProjectNameCreate will insert a new Typetemplate4YourProjectName in the store
-func (s Service) Typetemplate4YourProjectNameCreate(ctx echo.Context) error {
-	handlerName := "Typetemplate4YourProjectNameCreate"
+// TypeTemplate4ServiceNameCreate will insert a new TypeTemplate4ServiceName in the store
+func (s Service) TypeTemplate4ServiceNameCreate(ctx echo.Context) error {
+	handlerName := "TypeTemplate4ServiceNameCreate"
 	goHttpEcho.TraceHttpRequest(handlerName, ctx.Request(), s.Log)
 	// get the current user from JWT TOKEN
 	claims := s.Server.JwtCheck.GetJwtCustomClaimsFromContext(ctx)
 	currentUserId := claims.User.UserId
 	s.Log.Info("handler called", "handler", handlerName, "userId", currentUserId)
 	if !claims.User.IsAdmin {
-		return echo.NewHTTPError(http.StatusUnauthorized, OnlyAdminCanManageTypetemplate4YourProjectNames)
+		return echo.NewHTTPError(http.StatusUnauthorized, OnlyAdminCanManageTypeTemplate4ServiceNames)
 	}
-	newTypetemplate4YourProjectName := &Typetemplate4YourProjectName{
+	newTypeTemplate4ServiceName := &TypeTemplate4ServiceName{
 		Comment:           nil,
 		CreatedAt:         nil,
 		CreatedBy:         int32(currentUserId),
@@ -438,36 +438,36 @@ func (s Service) Typetemplate4YourProjectNameCreate(ctx echo.Context) error {
 		Name:              "",
 		TableName:         nil,
 	}
-	if err := ctx.Bind(newTypetemplate4YourProjectName); err != nil {
-		msg := fmt.Sprintf("Typetemplate4YourProjectNameCreate has invalid format [%v]", err)
+	if err := ctx.Bind(newTypeTemplate4ServiceName); err != nil {
+		msg := fmt.Sprintf("TypeTemplate4ServiceNameCreate has invalid format [%v]", err)
 		s.Log.Error(msg)
 		return ctx.JSON(http.StatusBadRequest, msg)
 	}
-	if len(strings.Trim(newTypetemplate4YourProjectName.Name, " ")) < 1 {
+	if len(strings.Trim(newTypeTemplate4ServiceName.Name, " ")) < 1 {
 		msg := fmt.Sprintf(FieldCannotBeEmpty, "name")
 		s.Log.Error(msg)
 		return ctx.JSON(http.StatusBadRequest, msg)
 	}
-	if len(newTypetemplate4YourProjectName.Name) < MinNameLength {
-		msg := fmt.Sprintf(FieldMinLengthIsN+", found %d", "name", MinNameLength, len(newTypetemplate4YourProjectName.Name))
+	if len(newTypeTemplate4ServiceName.Name) < MinNameLength {
+		msg := fmt.Sprintf(FieldMinLengthIsN+", found %d", "name", MinNameLength, len(newTypeTemplate4ServiceName.Name))
 		s.Log.Error(msg)
 		return ctx.JSON(http.StatusBadRequest, msg)
 	}
 	// Use request context for cancellation and tracing support
 	reqCtx := ctx.Request().Context()
-	//s.Log.Info("# Create() before Store.Typetemplate4YourProjectNameCreate newtemplate4YourProjectName : %#v\n", newtemplate4YourProjectName)
-	typetemplate4YourProjectNameCreated, err := s.Store.CreateTypetemplate4YourProjectName(reqCtx, *newTypetemplate4YourProjectName)
+	//s.Log.Info("# Create() before Store.TypeTemplate4ServiceNameCreate newTemplate4ServiceName : %#v\n", newTemplate4ServiceName)
+	typeTemplate4ServiceNameCreated, err := s.Store.CreateTypeTemplate4ServiceName(reqCtx, *newTypeTemplate4ServiceName)
 	if err != nil {
-		msg := fmt.Sprintf("Typetemplate4YourProjectNameCreate had an error saving template_4_your_project_name:%#v, err:%#v", *newTypetemplate4YourProjectName, err)
+		msg := fmt.Sprintf("TypeTemplate4ServiceNameCreate had an error saving template_4_your_project_name:%#v, err:%#v", *newTypeTemplate4ServiceName, err)
 		s.Log.Info(msg)
 		return ctx.JSON(http.StatusBadRequest, msg)
 	}
-	s.Log.Info("Typetemplate4YourProjectNameCreate success", "typetemplate4YourProjectNameId", typetemplate4YourProjectNameCreated.Id)
-	return ctx.JSON(http.StatusCreated, typetemplate4YourProjectNameCreated)
+	s.Log.Info("TypeTemplate4ServiceNameCreate success", "typeTemplate4ServiceNameId", typeTemplate4ServiceNameCreated.Id)
+	return ctx.JSON(http.StatusCreated, typeTemplate4ServiceNameCreated)
 }
 
-func (s Service) Typetemplate4YourProjectNameCount(ctx echo.Context, params Typetemplate4YourProjectNameCountParams) error {
-	handlerName := "Typetemplate4YourProjectNameCount"
+func (s Service) TypeTemplate4ServiceNameCount(ctx echo.Context, params TypeTemplate4ServiceNameCountParams) error {
+	handlerName := "TypeTemplate4ServiceNameCount"
 	goHttpEcho.TraceHttpRequest(handlerName, ctx.Request(), s.Log)
 	// get the current user from JWT TOKEN
 	claims := s.Server.JwtCheck.GetJwtCustomClaimsFromContext(ctx)
@@ -475,16 +475,16 @@ func (s Service) Typetemplate4YourProjectNameCount(ctx echo.Context, params Type
 	s.Log.Info("handler called", "handler", handlerName, "userId", currentUserId)
 	// Use request context for cancellation and tracing support
 	reqCtx := ctx.Request().Context()
-	numtemplate4YourProjectNames, err := s.Store.CountTypetemplate4YourProjectName(reqCtx, params)
+	numTemplate4ServiceNames, err := s.Store.CountTypeTemplate4ServiceName(reqCtx, params)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("problem counting template_4_your_project_names :%v", err))
 	}
-	return ctx.JSON(http.StatusOK, numtemplate4YourProjectNames)
+	return ctx.JSON(http.StatusOK, numTemplate4ServiceNames)
 }
 
-// Typetemplate4YourProjectNameDelete will remove the given Typetemplate4YourProjectName entry from the store, and if not present will return 400 Bad Request
-func (s Service) Typetemplate4YourProjectNameDelete(ctx echo.Context, typetemplate4YourProjectNameId int32) error {
-	handlerName := "Typetemplate4YourProjectNameDelete"
+// TypeTemplate4ServiceNameDelete will remove the given TypeTemplate4ServiceName entry from the store, and if not present will return 400 Bad Request
+func (s Service) TypeTemplate4ServiceNameDelete(ctx echo.Context, typeTemplate4ServiceNameId int32) error {
+	handlerName := "TypeTemplate4ServiceNameDelete"
 	goHttpEcho.TraceHttpRequest(handlerName, ctx.Request(), s.Log)
 	// get the current user from JWT TOKEN
 	claims := s.Server.JwtCheck.GetJwtCustomClaimsFromContext(ctx)
@@ -492,18 +492,18 @@ func (s Service) Typetemplate4YourProjectNameDelete(ctx echo.Context, typetempla
 	s.Log.Info("handler called", "handler", handlerName, "userId", currentUserId)
 	// IF USER IS NOT ADMIN  RETURN 401 Unauthorized
 	if !claims.User.IsAdmin {
-		return echo.NewHTTPError(http.StatusUnauthorized, OnlyAdminCanManageTypetemplate4YourProjectNames)
+		return echo.NewHTTPError(http.StatusUnauthorized, OnlyAdminCanManageTypeTemplate4ServiceNames)
 	}
 	reqCtx := ctx.Request().Context()
-	typetemplate4YourProjectNameCount, err := s.DbConn.GetQueryInt(reqCtx, existTypetemplate4YourProjectName, typetemplate4YourProjectNameId)
-	if err != nil || typetemplate4YourProjectNameCount < 1 {
-		msg := fmt.Sprintf("Typetemplate4YourProjectNameDelete(%v) cannot delete this id, it does not exist !", typetemplate4YourProjectNameId)
+	typeTemplate4ServiceNameCount, err := s.DbConn.GetQueryInt(reqCtx, existTypeTemplate4ServiceName, typeTemplate4ServiceNameId)
+	if err != nil || typeTemplate4ServiceNameCount < 1 {
+		msg := fmt.Sprintf("TypeTemplate4ServiceNameDelete(%v) cannot delete this id, it does not exist !", typeTemplate4ServiceNameId)
 		s.Log.Warn(msg)
 		return ctx.JSON(http.StatusNotFound, msg)
 	} else {
-		err := s.Store.DeleteTypetemplate4YourProjectName(reqCtx, typetemplate4YourProjectNameId, currentUserId)
+		err := s.Store.DeleteTypeTemplate4ServiceName(reqCtx, typeTemplate4ServiceNameId, currentUserId)
 		if err != nil {
-			msg := fmt.Sprintf("Typetemplate4YourProjectNameDelete(%v) got an error: %#v ", typetemplate4YourProjectNameId, err)
+			msg := fmt.Sprintf("TypeTemplate4ServiceNameDelete(%v) got an error: %#v ", typeTemplate4ServiceNameId, err)
 			s.Log.Error(msg)
 			return echo.NewHTTPError(http.StatusInternalServerError, msg)
 		}
@@ -511,33 +511,33 @@ func (s Service) Typetemplate4YourProjectNameDelete(ctx echo.Context, typetempla
 	}
 }
 
-// Typetemplate4YourProjectNameGet will retrieve the template4YourProjectName with the given id in the store and return it
-func (s Service) Typetemplate4YourProjectNameGet(ctx echo.Context, typetemplate4YourProjectNameId int32) error {
-	handlerName := "Typetemplate4YourProjectNameGet"
+// TypeTemplate4ServiceNameGet will retrieve the Template4ServiceName with the given id in the store and return it
+func (s Service) TypeTemplate4ServiceNameGet(ctx echo.Context, typeTemplate4ServiceNameId int32) error {
+	handlerName := "TypeTemplate4ServiceNameGet"
 	goHttpEcho.TraceHttpRequest(handlerName, ctx.Request(), s.Log)
 	// get the current user from JWT TOKEN
 	claims := s.Server.JwtCheck.GetJwtCustomClaimsFromContext(ctx)
 	currentUserId := claims.User.UserId
 	s.Log.Info("handler called", "handler", handlerName, "userId", currentUserId)
 	if !claims.User.IsAdmin {
-		return echo.NewHTTPError(http.StatusUnauthorized, OnlyAdminCanManageTypetemplate4YourProjectNames)
+		return echo.NewHTTPError(http.StatusUnauthorized, OnlyAdminCanManageTypeTemplate4ServiceNames)
 	}
 	reqCtx := ctx.Request().Context()
-	typetemplate4YourProjectNameCount, err := s.DbConn.GetQueryInt(reqCtx, existTypetemplate4YourProjectName, typetemplate4YourProjectNameId)
-	if err != nil || typetemplate4YourProjectNameCount < 1 {
-		msg := fmt.Sprintf("Typetemplate4YourProjectNameGet(%v) cannot retrieve this id, it does not exist !", typetemplate4YourProjectNameId)
+	typeTemplate4ServiceNameCount, err := s.DbConn.GetQueryInt(reqCtx, existTypeTemplate4ServiceName, typeTemplate4ServiceNameId)
+	if err != nil || typeTemplate4ServiceNameCount < 1 {
+		msg := fmt.Sprintf("TypeTemplate4ServiceNameGet(%v) cannot retrieve this id, it does not exist !", typeTemplate4ServiceNameId)
 		s.Log.Warn(msg)
 		return ctx.JSON(http.StatusNotFound, msg)
 	}
-	typetemplate4YourProjectName, err := s.Store.GetTypetemplate4YourProjectName(reqCtx, typetemplate4YourProjectNameId)
+	typeTemplate4ServiceName, err := s.Store.GetTypeTemplate4ServiceName(reqCtx, typeTemplate4ServiceNameId)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("problem retrieving Typetemplate4YourProjectName :%v", err))
+		return echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("problem retrieving TypeTemplate4ServiceName :%v", err))
 	}
-	return ctx.JSON(http.StatusOK, typetemplate4YourProjectName)
+	return ctx.JSON(http.StatusOK, typeTemplate4ServiceName)
 }
 
-func (s Service) Typetemplate4YourProjectNameUpdate(ctx echo.Context, typetemplate4YourProjectNameId int32) error {
-	handlerName := "Typetemplate4YourProjectNameUpdate"
+func (s Service) TypeTemplate4ServiceNameUpdate(ctx echo.Context, typeTemplate4ServiceNameId int32) error {
+	handlerName := "TypeTemplate4ServiceNameUpdate"
 	goHttpEcho.TraceHttpRequest(handlerName, ctx.Request(), s.Log)
 	// get the current user from JWT TOKEN
 	claims := s.Server.JwtCheck.GetJwtCustomClaimsFromContext(ctx)
@@ -545,38 +545,38 @@ func (s Service) Typetemplate4YourProjectNameUpdate(ctx echo.Context, typetempla
 	s.Log.Info("handler called", "handler", handlerName, "userId", currentUserId)
 	// IF USER IS NOT ADMIN  RETURN 401 Unauthorized
 	if !claims.User.IsAdmin {
-		return echo.NewHTTPError(http.StatusUnauthorized, OnlyAdminCanManageTypetemplate4YourProjectNames)
+		return echo.NewHTTPError(http.StatusUnauthorized, OnlyAdminCanManageTypeTemplate4ServiceNames)
 	}
 	reqCtx := ctx.Request().Context()
-	typetemplate4YourProjectNameCount, err := s.DbConn.GetQueryInt(reqCtx, existTypetemplate4YourProjectName, typetemplate4YourProjectNameId)
-	if err != nil || typetemplate4YourProjectNameCount < 1 {
-		msg := fmt.Sprintf("Typetemplate4YourProjectNameUpdate(%v) cannot update this id, it does not exist !", typetemplate4YourProjectNameId)
+	typeTemplate4ServiceNameCount, err := s.DbConn.GetQueryInt(reqCtx, existTypeTemplate4ServiceName, typeTemplate4ServiceNameId)
+	if err != nil || typeTemplate4ServiceNameCount < 1 {
+		msg := fmt.Sprintf("TypeTemplate4ServiceNameUpdate(%v) cannot update this id, it does not exist !", typeTemplate4ServiceNameId)
 		s.Log.Warn(msg)
 		return ctx.JSON(http.StatusNotFound, msg)
 	}
-	uTypetemplate4YourProjectName := new(Typetemplate4YourProjectName)
-	if err := ctx.Bind(uTypetemplate4YourProjectName); err != nil {
-		msg := fmt.Sprintf("Typetemplate4YourProjectNameUpdate has invalid format error:[%v]", err)
+	uTypeTemplate4ServiceName := new(TypeTemplate4ServiceName)
+	if err := ctx.Bind(uTypeTemplate4ServiceName); err != nil {
+		msg := fmt.Sprintf("TypeTemplate4ServiceNameUpdate has invalid format error:[%v]", err)
 		s.Log.Error(msg)
 		return ctx.JSON(http.StatusBadRequest, msg)
 	}
-	if len(strings.Trim(uTypetemplate4YourProjectName.Name, " ")) < 1 {
+	if len(strings.Trim(uTypeTemplate4ServiceName.Name, " ")) < 1 {
 		msg := fmt.Sprintf(FieldCannotBeEmpty, "name")
 		s.Log.Error(msg)
 		return ctx.JSON(http.StatusBadRequest, msg)
 	}
-	if len(uTypetemplate4YourProjectName.Name) < MinNameLength {
-		msg := fmt.Sprintf(FieldMinLengthIsN+", found %d", "name", MinNameLength, len(uTypetemplate4YourProjectName.Name))
+	if len(uTypeTemplate4ServiceName.Name) < MinNameLength {
+		msg := fmt.Sprintf(FieldMinLengthIsN+", found %d", "name", MinNameLength, len(uTypeTemplate4ServiceName.Name))
 		s.Log.Error(msg)
 		return ctx.JSON(http.StatusBadRequest, msg)
 	}
-	uTypetemplate4YourProjectName.LastModifiedBy = &currentUserId
-	template_4_your_project_nameUpdated, err := s.Store.UpdateTypetemplate4YourProjectName(reqCtx, typetemplate4YourProjectNameId, *uTypetemplate4YourProjectName)
+	uTypeTemplate4ServiceName.LastModifiedBy = &currentUserId
+	template_4_your_project_nameUpdated, err := s.Store.UpdateTypeTemplate4ServiceName(reqCtx, typeTemplate4ServiceNameId, *uTypeTemplate4ServiceName)
 	if err != nil {
-		msg := fmt.Sprintf("Typetemplate4YourProjectNameUpdate had an error saving typetemplate4YourProjectName:%#v, err:%#v", *uTypetemplate4YourProjectName, err)
+		msg := fmt.Sprintf("TypeTemplate4ServiceNameUpdate had an error saving typeTemplate4ServiceName:%#v, err:%#v", *uTypeTemplate4ServiceName, err)
 		s.Log.Info(msg)
 		return ctx.JSON(http.StatusBadRequest, msg)
 	}
-	s.Log.Info("Typetemplate4YourProjectNameUpdate success", "typetemplate4YourProjectNameId", template_4_your_project_nameUpdated.Id)
+	s.Log.Info("TypeTemplate4ServiceNameUpdate success", "typeTemplate4ServiceNameId", template_4_your_project_nameUpdated.Id)
 	return ctx.JSON(http.StatusOK, template_4_your_project_nameUpdated)
 }

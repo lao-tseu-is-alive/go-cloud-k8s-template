@@ -1,4 +1,4 @@
-package template_4_your_project_name
+package template4gopackage
 
 import (
 	"context"
@@ -24,36 +24,36 @@ func (m *MockStorage) GeoJson(ctx context.Context, offset, limit int, params Geo
 	return args.String(0), args.Error(1)
 }
 
-func (m *MockStorage) List(ctx context.Context, offset, limit int, params ListParams) ([]*template4YourProjectNameList, error) {
+func (m *MockStorage) List(ctx context.Context, offset, limit int, params ListParams) ([]*Template4ServiceNameList, error) {
 	args := m.Called(ctx, offset, limit, params)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
-	return args.Get(0).([]*template4YourProjectNameList), args.Error(1)
+	return args.Get(0).([]*Template4ServiceNameList), args.Error(1)
 }
 
-func (m *MockStorage) ListByExternalId(ctx context.Context, offset, limit int, externalId int) ([]*template4YourProjectNameList, error) {
+func (m *MockStorage) ListByExternalId(ctx context.Context, offset, limit int, externalId int) ([]*Template4ServiceNameList, error) {
 	args := m.Called(ctx, offset, limit, externalId)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
-	return args.Get(0).([]*template4YourProjectNameList), args.Error(1)
+	return args.Get(0).([]*Template4ServiceNameList), args.Error(1)
 }
 
-func (m *MockStorage) Search(ctx context.Context, offset, limit int, params SearchParams) ([]*template4YourProjectNameList, error) {
+func (m *MockStorage) Search(ctx context.Context, offset, limit int, params SearchParams) ([]*Template4ServiceNameList, error) {
 	args := m.Called(ctx, offset, limit, params)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
-	return args.Get(0).([]*template4YourProjectNameList), args.Error(1)
+	return args.Get(0).([]*Template4ServiceNameList), args.Error(1)
 }
 
-func (m *MockStorage) Get(ctx context.Context, id uuid.UUID) (*template4YourProjectName, error) {
+func (m *MockStorage) Get(ctx context.Context, id uuid.UUID) (*Template4ServiceName, error) {
 	args := m.Called(ctx, id)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
-	return args.Get(0).(*template4YourProjectName), args.Error(1)
+	return args.Get(0).(*Template4ServiceName), args.Error(1)
 }
 
 func (m *MockStorage) Exist(ctx context.Context, id uuid.UUID) bool {
@@ -66,20 +66,20 @@ func (m *MockStorage) Count(ctx context.Context, params CountParams) (int32, err
 	return int32(args.Int(0)), args.Error(1)
 }
 
-func (m *MockStorage) Create(ctx context.Context, template_4_your_project_name template4YourProjectName) (*template4YourProjectName, error) {
+func (m *MockStorage) Create(ctx context.Context, template_4_your_project_name Template4ServiceName) (*Template4ServiceName, error) {
 	args := m.Called(ctx, template_4_your_project_name)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
-	return args.Get(0).(*template4YourProjectName), args.Error(1)
+	return args.Get(0).(*Template4ServiceName), args.Error(1)
 }
 
-func (m *MockStorage) Update(ctx context.Context, id uuid.UUID, template_4_your_project_name template4YourProjectName) (*template4YourProjectName, error) {
+func (m *MockStorage) Update(ctx context.Context, id uuid.UUID, template_4_your_project_name Template4ServiceName) (*Template4ServiceName, error) {
 	args := m.Called(ctx, id, template_4_your_project_name)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
-	return args.Get(0).(*template4YourProjectName), args.Error(1)
+	return args.Get(0).(*Template4ServiceName), args.Error(1)
 }
 
 func (m *MockStorage) Delete(ctx context.Context, id uuid.UUID, userId int32) error {
@@ -87,7 +87,7 @@ func (m *MockStorage) Delete(ctx context.Context, id uuid.UUID, userId int32) er
 	return args.Error(0)
 }
 
-func (m *MockStorage) Istemplate4YourProjectNameActive(ctx context.Context, id uuid.UUID) bool {
+func (m *MockStorage) IsTemplate4ServiceNameActive(ctx context.Context, id uuid.UUID) bool {
 	args := m.Called(ctx, id)
 	return args.Bool(0)
 }
@@ -97,44 +97,44 @@ func (m *MockStorage) IsUserOwner(ctx context.Context, id uuid.UUID, userId int3
 	return args.Bool(0)
 }
 
-func (m *MockStorage) CreateTypetemplate4YourProjectName(ctx context.Context, typetemplate4YourProjectName Typetemplate4YourProjectName) (*Typetemplate4YourProjectName, error) {
-	args := m.Called(ctx, typetemplate4YourProjectName)
+func (m *MockStorage) CreateTypeTemplate4ServiceName(ctx context.Context, typeTemplate4ServiceName TypeTemplate4ServiceName) (*TypeTemplate4ServiceName, error) {
+	args := m.Called(ctx, typeTemplate4ServiceName)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
-	return args.Get(0).(*Typetemplate4YourProjectName), args.Error(1)
+	return args.Get(0).(*TypeTemplate4ServiceName), args.Error(1)
 }
 
-func (m *MockStorage) UpdateTypetemplate4YourProjectName(ctx context.Context, id int32, typetemplate4YourProjectName Typetemplate4YourProjectName) (*Typetemplate4YourProjectName, error) {
-	args := m.Called(ctx, id, typetemplate4YourProjectName)
+func (m *MockStorage) UpdateTypeTemplate4ServiceName(ctx context.Context, id int32, typeTemplate4ServiceName TypeTemplate4ServiceName) (*TypeTemplate4ServiceName, error) {
+	args := m.Called(ctx, id, typeTemplate4ServiceName)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
-	return args.Get(0).(*Typetemplate4YourProjectName), args.Error(1)
+	return args.Get(0).(*TypeTemplate4ServiceName), args.Error(1)
 }
 
-func (m *MockStorage) DeleteTypetemplate4YourProjectName(ctx context.Context, id int32, userId int32) error {
+func (m *MockStorage) DeleteTypeTemplate4ServiceName(ctx context.Context, id int32, userId int32) error {
 	args := m.Called(ctx, id, userId)
 	return args.Error(0)
 }
 
-func (m *MockStorage) ListTypetemplate4YourProjectName(ctx context.Context, offset, limit int, params Typetemplate4YourProjectNameListParams) ([]*Typetemplate4YourProjectNameList, error) {
+func (m *MockStorage) ListTypeTemplate4ServiceName(ctx context.Context, offset, limit int, params TypeTemplate4ServiceNameListParams) ([]*TypeTemplate4ServiceNameList, error) {
 	args := m.Called(ctx, offset, limit, params)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
-	return args.Get(0).([]*Typetemplate4YourProjectNameList), args.Error(1)
+	return args.Get(0).([]*TypeTemplate4ServiceNameList), args.Error(1)
 }
 
-func (m *MockStorage) GetTypetemplate4YourProjectName(ctx context.Context, id int32) (*Typetemplate4YourProjectName, error) {
+func (m *MockStorage) GetTypeTemplate4ServiceName(ctx context.Context, id int32) (*TypeTemplate4ServiceName, error) {
 	args := m.Called(ctx, id)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
-	return args.Get(0).(*Typetemplate4YourProjectName), args.Error(1)
+	return args.Get(0).(*TypeTemplate4ServiceName), args.Error(1)
 }
 
-func (m *MockStorage) CountTypetemplate4YourProjectName(ctx context.Context, params Typetemplate4YourProjectNameCountParams) (int32, error) {
+func (m *MockStorage) CountTypeTemplate4ServiceName(ctx context.Context, params TypeTemplate4ServiceNameCountParams) (int32, error) {
 	args := m.Called(ctx, params)
 	return int32(args.Int(0)), args.Error(1)
 }
@@ -212,20 +212,20 @@ func TestBusinessService_Create(t *testing.T) {
 		service := createTestBusinessService(mockStore, mockDB)
 
 		template_4_your_project_nameID := uuid.New()
-		newtemplate4YourProjectName := template4YourProjectName{
+		newTemplate4ServiceName := Template4ServiceName{
 			Id:   template_4_your_project_nameID,
-			Name: "Test template4YourProjectName",
+			Name: "Test Template4ServiceName",
 		}
 
-		expectedtemplate4YourProjectName := newtemplate4YourProjectName
-		expectedtemplate4YourProjectName.CreatedBy = 123
+		expectedTemplate4ServiceName := newTemplate4ServiceName
+		expectedTemplate4ServiceName.CreatedBy = 123
 
-		// Mock Typetemplate4YourProjectName existence check
-		mockDB.On("GetQueryInt", mock.Anytemplate_4_your_project_name, existTypetemplate4YourProjectName, []interface{}{newtemplate4YourProjectName.TypeId}).Return(1, nil)
+		// Mock TypeTemplate4ServiceName existence check
+		mockDB.On("GetQueryInt", mock.Anytemplate_4_your_project_name, existTypeTemplate4ServiceName, []interface{}{newTemplate4ServiceName.TypeId}).Return(1, nil)
 		mockStore.On("Exist", mock.Anytemplate_4_your_project_name, template_4_your_project_nameID).Return(false)
-		mockStore.On("Create", mock.Anytemplate_4_your_project_name, mock.Anytemplate_4_your_project_nameOfType("template4YourProjectName")).Return(&expectedtemplate4YourProjectName, nil)
+		mockStore.On("Create", mock.Anytemplate_4_your_project_name, mock.Anytemplate_4_your_project_nameOfType("Template4ServiceName")).Return(&expectedTemplate4ServiceName, nil)
 
-		result, err := service.Create(ctx, 123, newtemplate4YourProjectName)
+		result, err := service.Create(ctx, 123, newTemplate4ServiceName)
 
 		assert.NoError(t, err)
 		assert.NotNil(t, result)
@@ -238,12 +238,12 @@ func TestBusinessService_Create(t *testing.T) {
 		mockDB := new(MockDB)
 		service := createTestBusinessService(mockStore, mockDB)
 
-		newtemplate4YourProjectName := template4YourProjectName{
+		newTemplate4ServiceName := Template4ServiceName{
 			Id:   uuid.New(),
 			Name: "  ", // Empty/whitespace name
 		}
 
-		result, err := service.Create(ctx, 123, newtemplate4YourProjectName)
+		result, err := service.Create(ctx, 123, newTemplate4ServiceName)
 
 		assert.Error(t, err)
 		assert.Nil(t, result)
@@ -255,12 +255,12 @@ func TestBusinessService_Create(t *testing.T) {
 		mockDB := new(MockDB)
 		service := createTestBusinessService(mockStore, mockDB)
 
-		newtemplate4YourProjectName := template4YourProjectName{
+		newTemplate4ServiceName := Template4ServiceName{
 			Id:   uuid.New(),
 			Name: "ab", // Less than MinNameLength (5)
 		}
 
-		result, err := service.Create(ctx, 123, newtemplate4YourProjectName)
+		result, err := service.Create(ctx, 123, newTemplate4ServiceName)
 
 		assert.Error(t, err)
 		assert.Nil(t, result)
@@ -272,20 +272,20 @@ func TestBusinessService_Create(t *testing.T) {
 		mockDB := new(MockDB)
 		service := createTestBusinessService(mockStore, mockDB)
 
-		newtemplate4YourProjectName := template4YourProjectName{
+		newTemplate4ServiceName := Template4ServiceName{
 			Id:     uuid.New(),
-			Name:   "Test template4YourProjectName",
+			Name:   "Test Template4ServiceName",
 			TypeId: 999,
 		}
 
-		// Mock Typetemplate4YourProjectName existence check failure
-		mockDB.On("GetQueryInt", mock.Anytemplate_4_your_project_name, existTypetemplate4YourProjectName, []interface{}{newtemplate4YourProjectName.TypeId}).Return(0, nil)
+		// Mock TypeTemplate4ServiceName existence check failure
+		mockDB.On("GetQueryInt", mock.Anytemplate_4_your_project_name, existTypeTemplate4ServiceName, []interface{}{newTemplate4ServiceName.TypeId}).Return(0, nil)
 
-		result, err := service.Create(ctx, 123, newtemplate4YourProjectName)
+		result, err := service.Create(ctx, 123, newTemplate4ServiceName)
 
 		assert.Error(t, err)
 		assert.Nil(t, result)
-		assert.ErrorIs(t, err, ErrTypetemplate4YourProjectNameNotFound)
+		assert.ErrorIs(t, err, ErrTypeTemplate4ServiceNameNotFound)
 	})
 
 	t.Run("already exists error", func(t *testing.T) {
@@ -294,16 +294,16 @@ func TestBusinessService_Create(t *testing.T) {
 		service := createTestBusinessService(mockStore, mockDB)
 
 		template_4_your_project_nameID := uuid.New()
-		newtemplate4YourProjectName := template4YourProjectName{
+		newTemplate4ServiceName := Template4ServiceName{
 			Id:   template_4_your_project_nameID,
-			Name: "Test template4YourProjectName",
+			Name: "Test Template4ServiceName",
 		}
 
-		// Mock Typetemplate4YourProjectName existence check
-		mockDB.On("GetQueryInt", mock.Anytemplate_4_your_project_name, existTypetemplate4YourProjectName, []interface{}{newtemplate4YourProjectName.TypeId}).Return(1, nil)
+		// Mock TypeTemplate4ServiceName existence check
+		mockDB.On("GetQueryInt", mock.Anytemplate_4_your_project_name, existTypeTemplate4ServiceName, []interface{}{newTemplate4ServiceName.TypeId}).Return(1, nil)
 		mockStore.On("Exist", mock.Anytemplate_4_your_project_name, template_4_your_project_nameID).Return(true)
 
-		result, err := service.Create(ctx, 123, newtemplate4YourProjectName)
+		result, err := service.Create(ctx, 123, newTemplate4ServiceName)
 
 		assert.Error(t, err)
 		assert.Nil(t, result)
@@ -322,19 +322,19 @@ func TestBusinessService_Get(t *testing.T) {
 		service := createTestBusinessService(mockStore, mockDB)
 
 		template_4_your_project_nameID := uuid.New()
-		expectedtemplate4YourProjectName := &template4YourProjectName{
+		expectedTemplate4ServiceName := &Template4ServiceName{
 			Id:   template_4_your_project_nameID,
-			Name: "Test template4YourProjectName",
+			Name: "Test Template4ServiceName",
 		}
 
 		mockStore.On("Exist", mock.Anytemplate_4_your_project_name, template_4_your_project_nameID).Return(true)
-		mockStore.On("Get", mock.Anytemplate_4_your_project_name, template_4_your_project_nameID).Return(expectedtemplate4YourProjectName, nil)
+		mockStore.On("Get", mock.Anytemplate_4_your_project_name, template_4_your_project_nameID).Return(expectedTemplate4ServiceName, nil)
 
 		result, err := service.Get(ctx, template_4_your_project_nameID)
 
 		assert.NoError(t, err)
 		assert.NotNil(t, result)
-		assert.Equal(t, "Test template4YourProjectName", result.Name)
+		assert.Equal(t, "Test Template4ServiceName", result.Name)
 		mockStore.AssertExpectations(t)
 	})
 
@@ -366,25 +366,25 @@ func TestBusinessService_Update(t *testing.T) {
 
 		template_4_your_project_nameID := uuid.New()
 		userID := int32(123)
-		updatetemplate4YourProjectName := template4YourProjectName{
+		updateTemplate4ServiceName := Template4ServiceName{
 			Id:   template_4_your_project_nameID,
-			Name: "Updated template4YourProjectName",
+			Name: "Updated Template4ServiceName",
 		}
 
-		expectedtemplate4YourProjectName := updatetemplate4YourProjectName
-		expectedtemplate4YourProjectName.LastModifiedBy = &userID
+		expectedTemplate4ServiceName := updateTemplate4ServiceName
+		expectedTemplate4ServiceName.LastModifiedBy = &userID
 
 		mockStore.On("Exist", mock.Anytemplate_4_your_project_name, template_4_your_project_nameID).Return(true)
 		mockStore.On("IsUserOwner", mock.Anytemplate_4_your_project_name, template_4_your_project_nameID, userID).Return(true)
-		// Mock Typetemplate4YourProjectName existence check
-		mockDB.On("GetQueryInt", mock.Anytemplate_4_your_project_name, existTypetemplate4YourProjectName, []interface{}{updatetemplate4YourProjectName.TypeId}).Return(1, nil)
-		mockStore.On("Update", mock.Anytemplate_4_your_project_name, template_4_your_project_nameID, mock.Anytemplate_4_your_project_nameOfType("template4YourProjectName")).Return(&expectedtemplate4YourProjectName, nil)
+		// Mock TypeTemplate4ServiceName existence check
+		mockDB.On("GetQueryInt", mock.Anytemplate_4_your_project_name, existTypeTemplate4ServiceName, []interface{}{updateTemplate4ServiceName.TypeId}).Return(1, nil)
+		mockStore.On("Update", mock.Anytemplate_4_your_project_name, template_4_your_project_nameID, mock.Anytemplate_4_your_project_nameOfType("Template4ServiceName")).Return(&expectedTemplate4ServiceName, nil)
 
-		result, err := service.Update(ctx, userID, template_4_your_project_nameID, updatetemplate4YourProjectName)
+		result, err := service.Update(ctx, userID, template_4_your_project_nameID, updateTemplate4ServiceName)
 
 		assert.NoError(t, err)
 		assert.NotNil(t, result)
-		assert.Equal(t, "Updated template4YourProjectName", result.Name)
+		assert.Equal(t, "Updated Template4ServiceName", result.Name)
 		mockStore.AssertExpectations(t)
 	})
 
@@ -395,15 +395,15 @@ func TestBusinessService_Update(t *testing.T) {
 
 		template_4_your_project_nameID := uuid.New()
 		userID := int32(123)
-		updatetemplate4YourProjectName := template4YourProjectName{
+		updateTemplate4ServiceName := Template4ServiceName{
 			Id:   template_4_your_project_nameID,
-			Name: "Updated template4YourProjectName",
+			Name: "Updated Template4ServiceName",
 		}
 
 		mockStore.On("Exist", mock.Anytemplate_4_your_project_name, template_4_your_project_nameID).Return(true)
 		mockStore.On("IsUserOwner", mock.Anytemplate_4_your_project_name, template_4_your_project_nameID, userID).Return(false)
 
-		result, err := service.Update(ctx, userID, template_4_your_project_nameID, updatetemplate4YourProjectName)
+		result, err := service.Update(ctx, userID, template_4_your_project_nameID, updateTemplate4ServiceName)
 
 		assert.Error(t, err)
 		assert.Nil(t, result)
@@ -417,22 +417,22 @@ func TestBusinessService_Update(t *testing.T) {
 
 		template_4_your_project_nameID := uuid.New()
 		userID := int32(123)
-		updatetemplate4YourProjectName := template4YourProjectName{
+		updateTemplate4ServiceName := Template4ServiceName{
 			Id:     template_4_your_project_nameID,
-			Name:   "Updated template4YourProjectName",
+			Name:   "Updated Template4ServiceName",
 			TypeId: 999,
 		}
 
 		mockStore.On("Exist", mock.Anytemplate_4_your_project_name, template_4_your_project_nameID).Return(true)
 		mockStore.On("IsUserOwner", mock.Anytemplate_4_your_project_name, template_4_your_project_nameID, userID).Return(true)
-		// Mock Typetemplate4YourProjectName existence check failure
-		mockDB.On("GetQueryInt", mock.Anytemplate_4_your_project_name, existTypetemplate4YourProjectName, []interface{}{updatetemplate4YourProjectName.TypeId}).Return(0, nil)
+		// Mock TypeTemplate4ServiceName existence check failure
+		mockDB.On("GetQueryInt", mock.Anytemplate_4_your_project_name, existTypeTemplate4ServiceName, []interface{}{updateTemplate4ServiceName.TypeId}).Return(0, nil)
 
-		result, err := service.Update(ctx, userID, template_4_your_project_nameID, updatetemplate4YourProjectName)
+		result, err := service.Update(ctx, userID, template_4_your_project_nameID, updateTemplate4ServiceName)
 
 		assert.Error(t, err)
 		assert.Nil(t, result)
-		assert.ErrorIs(t, err, ErrTypetemplate4YourProjectNameNotFound)
+		assert.ErrorIs(t, err, ErrTypeTemplate4ServiceNameNotFound)
 		mockStore.AssertExpectations(t)
 	})
 }
@@ -487,9 +487,9 @@ func TestBusinessService_List(t *testing.T) {
 		mockDB := new(MockDB)
 		service := createTestBusinessService(mockStore, mockDB)
 
-		expectedList := []*template4YourProjectNameList{
-			{Id: uuid.New(), Name: "template4YourProjectName 1"},
-			{Id: uuid.New(), Name: "template4YourProjectName 2"},
+		expectedList := []*Template4ServiceNameList{
+			{Id: uuid.New(), Name: "Template4ServiceName 1"},
+			{Id: uuid.New(), Name: "Template4ServiceName 2"},
 		}
 		params := ListParams{}
 
@@ -554,8 +554,8 @@ func TestBusinessService_Count(t *testing.T) {
 	})
 }
 
-// Test CreateTypetemplate4YourProjectName operation
-func TestBusinessService_CreateTypetemplate4YourProjectName(t *testing.T) {
+// Test CreateTypeTemplate4ServiceName operation
+func TestBusinessService_CreateTypeTemplate4ServiceName(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("successful creation by admin", func(t *testing.T) {
@@ -563,17 +563,17 @@ func TestBusinessService_CreateTypetemplate4YourProjectName(t *testing.T) {
 		mockDB := new(MockDB)
 		service := createTestBusinessService(mockStore, mockDB)
 
-		newTypetemplate4YourProjectName := Typetemplate4YourProjectName{
+		newTypeTemplate4ServiceName := TypeTemplate4ServiceName{
 			Name: "Test Type",
 		}
 
-		expectedTypetemplate4YourProjectName := newTypetemplate4YourProjectName
-		expectedTypetemplate4YourProjectName.Id = 1
-		expectedTypetemplate4YourProjectName.CreatedBy = 123
+		expectedTypeTemplate4ServiceName := newTypeTemplate4ServiceName
+		expectedTypeTemplate4ServiceName.Id = 1
+		expectedTypeTemplate4ServiceName.CreatedBy = 123
 
-		mockStore.On("CreateTypetemplate4YourProjectName", mock.Anytemplate_4_your_project_name, mock.Anytemplate_4_your_project_nameOfType("Typetemplate4YourProjectName")).Return(&expectedTypetemplate4YourProjectName, nil)
+		mockStore.On("CreateTypeTemplate4ServiceName", mock.Anytemplate_4_your_project_name, mock.Anytemplate_4_your_project_nameOfType("TypeTemplate4ServiceName")).Return(&expectedTypeTemplate4ServiceName, nil)
 
-		result, err := service.CreateTypetemplate4YourProjectName(ctx, 123, true, newTypetemplate4YourProjectName)
+		result, err := service.CreateTypeTemplate4ServiceName(ctx, 123, true, newTypeTemplate4ServiceName)
 
 		assert.NoError(t, err)
 		assert.NotNil(t, result)
@@ -586,11 +586,11 @@ func TestBusinessService_CreateTypetemplate4YourProjectName(t *testing.T) {
 		mockDB := new(MockDB)
 		service := createTestBusinessService(mockStore, mockDB)
 
-		newTypetemplate4YourProjectName := Typetemplate4YourProjectName{
+		newTypeTemplate4ServiceName := TypeTemplate4ServiceName{
 			Name: "Test Type",
 		}
 
-		result, err := service.CreateTypetemplate4YourProjectName(ctx, 123, false, newTypetemplate4YourProjectName)
+		result, err := service.CreateTypeTemplate4ServiceName(ctx, 123, false, newTypeTemplate4ServiceName)
 
 		assert.Error(t, err)
 		assert.Nil(t, result)

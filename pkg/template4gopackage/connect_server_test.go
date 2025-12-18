@@ -1,4 +1,4 @@
-package template_4_your_project_name
+package template4gopackage
 
 import (
 	"context"
@@ -19,17 +19,17 @@ import (
 // =============================================================================
 
 // Helper to create a test Connect server
-func createTesttemplate4YourProjectNameConnectServer(mockStore *MockStorage, mockDB *MockDB) *template4YourProjectNameConnectServer {
+func createTestTemplate4ServiceNameConnectServer(mockStore *MockStorage, mockDB *MockDB) *Template4ServiceNameConnectServer {
 	logger := golog.NewLogger("simple", os.Stdout, golog.InfoLevel, "test")
 	businessService := NewBusinessService(mockStore, mockDB, logger, 50)
-	return Newtemplate4YourProjectNameConnectServer(businessService, logger)
+	return NewTemplate4ServiceNameConnectServer(businessService, logger)
 }
 
-// Helper to create a test Typetemplate4YourProjectName Connect server
-func createTestTypetemplate4YourProjectNameConnectServer(mockStore *MockStorage, mockDB *MockDB) *Typetemplate4YourProjectNameConnectServer {
+// Helper to create a test TypeTemplate4ServiceName Connect server
+func createTestTypeTemplate4ServiceNameConnectServer(mockStore *MockStorage, mockDB *MockDB) *TypeTemplate4ServiceNameConnectServer {
 	logger := golog.NewLogger("simple", os.Stdout, golog.InfoLevel, "test")
 	businessService := NewBusinessService(mockStore, mockDB, logger, 50)
-	return NewTypetemplate4YourProjectNameConnectServer(businessService, logger)
+	return NewTypeTemplate4ServiceNameConnectServer(businessService, logger)
 }
 
 // Helper to create a context with user info (simulating what AuthInterceptor does)
@@ -46,20 +46,20 @@ func createConnectRequest[T any](msg *T) *connect.Request[T] {
 }
 
 // =============================================================================
-// template4YourProjectNameConnectServer Tests
+// Template4ServiceNameConnectServer Tests
 // =============================================================================
 
-func Testtemplate4YourProjectNameConnectServer_List(t *testing.T) {
+func TestTemplate4ServiceNameConnectServer_List(t *testing.T) {
 	t.Run("successful list", func(t *testing.T) {
 		mockStore := new(MockStorage)
 		mockDB := new(MockDB)
-		server := createTesttemplate4YourProjectNameConnectServer(mockStore, mockDB)
+		server := createTestTemplate4ServiceNameConnectServer(mockStore, mockDB)
 
 		// Setup mock storage
 		now := time.Now()
-		expectedList := []*template4YourProjectNameList{
-			{Id: uuid.New(), Name: "template4YourProjectName 1", CreatedAt: &now},
-			{Id: uuid.New(), Name: "template4YourProjectName 2", CreatedAt: &now},
+		expectedList := []*Template4ServiceNameList{
+			{Id: uuid.New(), Name: "Template4ServiceName 1", CreatedAt: &now},
+			{Id: uuid.New(), Name: "Template4ServiceName 2", CreatedAt: &now},
 		}
 		mockStore.On("List", mock.Anytemplate_4_your_project_name, 0, 50, ListParams{}).Return(expectedList, nil)
 
@@ -72,20 +72,20 @@ func Testtemplate4YourProjectNameConnectServer_List(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.NotNil(t, resp)
-		assert.Len(t, resp.Msg.template4YourProjectNames, 2)
-		assert.Equal(t, "template4YourProjectName 1", resp.Msg.template4YourProjectNames[0].Name)
-		assert.Equal(t, "template4YourProjectName 2", resp.Msg.template4YourProjectNames[1].Name)
+		assert.Len(t, resp.Msg.Template4ServiceNames, 2)
+		assert.Equal(t, "Template4ServiceName 1", resp.Msg.Template4ServiceNames[0].Name)
+		assert.Equal(t, "Template4ServiceName 2", resp.Msg.Template4ServiceNames[1].Name)
 		mockStore.AssertExpectations(t)
 	})
 
 	t.Run("list with pagination", func(t *testing.T) {
 		mockStore := new(MockStorage)
 		mockDB := new(MockDB)
-		server := createTesttemplate4YourProjectNameConnectServer(mockStore, mockDB)
+		server := createTestTemplate4ServiceNameConnectServer(mockStore, mockDB)
 
 		now := time.Now()
-		expectedList := []*template4YourProjectNameList{
-			{Id: uuid.New(), Name: "template4YourProjectName 3", CreatedAt: &now},
+		expectedList := []*Template4ServiceNameList{
+			{Id: uuid.New(), Name: "Template4ServiceName 3", CreatedAt: &now},
 		}
 		mockStore.On("List", mock.Anytemplate_4_your_project_name, 10, 5, ListParams{}).Return(expectedList, nil)
 
@@ -96,25 +96,25 @@ func Testtemplate4YourProjectNameConnectServer_List(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.NotNil(t, resp)
-		assert.Len(t, resp.Msg.template4YourProjectNames, 1)
+		assert.Len(t, resp.Msg.Template4ServiceNames, 1)
 		mockStore.AssertExpectations(t)
 	})
 }
 
-func Testtemplate4YourProjectNameConnectServer_Get(t *testing.T) {
+func TestTemplate4ServiceNameConnectServer_Get(t *testing.T) {
 	t.Run("successful get", func(t *testing.T) {
 		mockStore := new(MockStorage)
 		mockDB := new(MockDB)
-		server := createTesttemplate4YourProjectNameConnectServer(mockStore, mockDB)
+		server := createTestTemplate4ServiceNameConnectServer(mockStore, mockDB)
 
 		template_4_your_project_nameID := uuid.New()
-		expectedtemplate4YourProjectName := &template4YourProjectName{
+		expectedTemplate4ServiceName := &Template4ServiceName{
 			Id:   template_4_your_project_nameID,
-			Name: "Test template4YourProjectName",
+			Name: "Test Template4ServiceName",
 		}
 
 		mockStore.On("Exist", mock.Anytemplate_4_your_project_name, template_4_your_project_nameID).Return(true)
-		mockStore.On("Get", mock.Anytemplate_4_your_project_name, template_4_your_project_nameID).Return(expectedtemplate4YourProjectName, nil)
+		mockStore.On("Get", mock.Anytemplate_4_your_project_name, template_4_your_project_nameID).Return(expectedTemplate4ServiceName, nil)
 
 		req := createConnectRequest(&template_4_your_project_namev1.GetRequest{Id: template_4_your_project_nameID.String()})
 		ctx := contextWithUser(123, false)
@@ -123,15 +123,15 @@ func Testtemplate4YourProjectNameConnectServer_Get(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.NotNil(t, resp)
-		assert.Equal(t, template_4_your_project_nameID.String(), resp.Msg.template4YourProjectName.Id)
-		assert.Equal(t, "Test template4YourProjectName", resp.Msg.template4YourProjectName.Name)
+		assert.Equal(t, template_4_your_project_nameID.String(), resp.Msg.Template4ServiceName.Id)
+		assert.Equal(t, "Test Template4ServiceName", resp.Msg.Template4ServiceName.Name)
 		mockStore.AssertExpectations(t)
 	})
 
 	t.Run("not found", func(t *testing.T) {
 		mockStore := new(MockStorage)
 		mockDB := new(MockDB)
-		server := createTesttemplate4YourProjectNameConnectServer(mockStore, mockDB)
+		server := createTestTemplate4ServiceNameConnectServer(mockStore, mockDB)
 
 		template_4_your_project_nameID := uuid.New()
 
@@ -153,7 +153,7 @@ func Testtemplate4YourProjectNameConnectServer_Get(t *testing.T) {
 	t.Run("invalid UUID format", func(t *testing.T) {
 		mockStore := new(MockStorage)
 		mockDB := new(MockDB)
-		server := createTesttemplate4YourProjectNameConnectServer(mockStore, mockDB)
+		server := createTestTemplate4ServiceNameConnectServer(mockStore, mockDB)
 
 		req := createConnectRequest(&template_4_your_project_namev1.GetRequest{Id: "not-a-uuid"})
 		ctx := contextWithUser(123, false)
@@ -168,26 +168,26 @@ func Testtemplate4YourProjectNameConnectServer_Get(t *testing.T) {
 	})
 }
 
-func Testtemplate4YourProjectNameConnectServer_Create(t *testing.T) {
+func TestTemplate4ServiceNameConnectServer_Create(t *testing.T) {
 	t.Run("successful create", func(t *testing.T) {
 		mockStore := new(MockStorage)
 		mockDB := new(MockDB)
-		server := createTesttemplate4YourProjectNameConnectServer(mockStore, mockDB)
+		server := createTestTemplate4ServiceNameConnectServer(mockStore, mockDB)
 
 		template_4_your_project_nameID := uuid.New()
-		expectedtemplate4YourProjectName := &template4YourProjectName{
+		expectedTemplate4ServiceName := &Template4ServiceName{
 			Id:        template_4_your_project_nameID,
-			Name:      "New template4YourProjectName",
+			Name:      "New Template4ServiceName",
 			CreatedBy: 123,
 		}
 
-		mockDB.On("GetQueryInt", mock.Anytemplate_4_your_project_name, existTypetemplate4YourProjectName, mock.Anytemplate_4_your_project_name).Return(1, nil)
+		mockDB.On("GetQueryInt", mock.Anytemplate_4_your_project_name, existTypeTemplate4ServiceName, mock.Anytemplate_4_your_project_name).Return(1, nil)
 		mockStore.On("Exist", mock.Anytemplate_4_your_project_name, mock.Anytemplate_4_your_project_nameOfType("uuid.UUID")).Return(false)
-		mockStore.On("Create", mock.Anytemplate_4_your_project_name, mock.Anytemplate_4_your_project_nameOfType("template4YourProjectName")).Return(expectedtemplate4YourProjectName, nil)
+		mockStore.On("Create", mock.Anytemplate_4_your_project_name, mock.Anytemplate_4_your_project_nameOfType("Template4ServiceName")).Return(expectedTemplate4ServiceName, nil)
 
 		req := createConnectRequest(&template_4_your_project_namev1.CreateRequest{
-			template4YourProjectName: &template_4_your_project_namev1.template4YourProjectName{
-				Name: "New template4YourProjectName",
+			Template4ServiceName: &template_4_your_project_namev1.Template4ServiceName{
+				Name: "New Template4ServiceName",
 			},
 		})
 		ctx := contextWithUser(123, false)
@@ -196,16 +196,16 @@ func Testtemplate4YourProjectNameConnectServer_Create(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.NotNil(t, resp)
-		assert.Equal(t, "New template4YourProjectName", resp.Msg.template4YourProjectName.Name)
+		assert.Equal(t, "New Template4ServiceName", resp.Msg.Template4ServiceName.Name)
 		mockStore.AssertExpectations(t)
 	})
 
 	t.Run("validation error - missing template_4_your_project_name", func(t *testing.T) {
 		mockStore := new(MockStorage)
 		mockDB := new(MockDB)
-		server := createTesttemplate4YourProjectNameConnectServer(mockStore, mockDB)
+		server := createTestTemplate4ServiceNameConnectServer(mockStore, mockDB)
 
-		req := createConnectRequest(&template_4_your_project_namev1.CreateRequest{template4YourProjectName: nil})
+		req := createConnectRequest(&template_4_your_project_namev1.CreateRequest{Template4ServiceName: nil})
 		ctx := contextWithUser(123, false)
 
 		resp, err := server.Create(ctx, req)
@@ -218,11 +218,11 @@ func Testtemplate4YourProjectNameConnectServer_Create(t *testing.T) {
 	})
 }
 
-func Testtemplate4YourProjectNameConnectServer_Delete(t *testing.T) {
+func TestTemplate4ServiceNameConnectServer_Delete(t *testing.T) {
 	t.Run("successful delete", func(t *testing.T) {
 		mockStore := new(MockStorage)
 		mockDB := new(MockDB)
-		server := createTesttemplate4YourProjectNameConnectServer(mockStore, mockDB)
+		server := createTestTemplate4ServiceNameConnectServer(mockStore, mockDB)
 
 		template_4_your_project_nameID := uuid.New()
 		userID := int32(123)
@@ -244,7 +244,7 @@ func Testtemplate4YourProjectNameConnectServer_Delete(t *testing.T) {
 	t.Run("permission denied - not owner", func(t *testing.T) {
 		mockStore := new(MockStorage)
 		mockDB := new(MockDB)
-		server := createTesttemplate4YourProjectNameConnectServer(mockStore, mockDB)
+		server := createTestTemplate4ServiceNameConnectServer(mockStore, mockDB)
 
 		template_4_your_project_nameID := uuid.New()
 		userID := int32(123)
@@ -266,11 +266,11 @@ func Testtemplate4YourProjectNameConnectServer_Delete(t *testing.T) {
 	})
 }
 
-func Testtemplate4YourProjectNameConnectServer_Count(t *testing.T) {
+func TestTemplate4ServiceNameConnectServer_Count(t *testing.T) {
 	t.Run("successful count", func(t *testing.T) {
 		mockStore := new(MockStorage)
 		mockDB := new(MockDB)
-		server := createTesttemplate4YourProjectNameConnectServer(mockStore, mockDB)
+		server := createTestTemplate4ServiceNameConnectServer(mockStore, mockDB)
 
 		mockStore.On("Count", mock.Anytemplate_4_your_project_name, CountParams{}).Return(42, nil)
 
@@ -287,51 +287,51 @@ func Testtemplate4YourProjectNameConnectServer_Count(t *testing.T) {
 }
 
 // =============================================================================
-// Typetemplate4YourProjectNameConnectServer Tests
+// TypeTemplate4ServiceNameConnectServer Tests
 // =============================================================================
 
-func TestTypetemplate4YourProjectNameConnectServer_List(t *testing.T) {
+func TestTypeTemplate4ServiceNameConnectServer_List(t *testing.T) {
 	t.Run("successful list", func(t *testing.T) {
 		mockStore := new(MockStorage)
 		mockDB := new(MockDB)
-		server := createTestTypetemplate4YourProjectNameConnectServer(mockStore, mockDB)
+		server := createTestTypeTemplate4ServiceNameConnectServer(mockStore, mockDB)
 
 		now := time.Now()
-		expectedList := []*Typetemplate4YourProjectNameList{
+		expectedList := []*TypeTemplate4ServiceNameList{
 			{Id: 1, Name: "Type 1", CreatedAt: now},
 			{Id: 2, Name: "Type 2", CreatedAt: now},
 		}
 
-		mockStore.On("ListTypetemplate4YourProjectName", mock.Anytemplate_4_your_project_name, 0, 250, Typetemplate4YourProjectNameListParams{}).Return(expectedList, nil)
+		mockStore.On("ListTypeTemplate4ServiceName", mock.Anytemplate_4_your_project_name, 0, 250, TypeTemplate4ServiceNameListParams{}).Return(expectedList, nil)
 
-		req := createConnectRequest(&template_4_your_project_namev1.Typetemplate4YourProjectNameListRequest{})
+		req := createConnectRequest(&template_4_your_project_namev1.TypeTemplate4ServiceNameListRequest{})
 		ctx := contextWithUser(123, false)
 
 		resp, err := server.List(ctx, req)
 
 		assert.NoError(t, err)
 		assert.NotNil(t, resp)
-		assert.Len(t, resp.Msg.Typetemplate4YourProjectNames, 2)
+		assert.Len(t, resp.Msg.TypeTemplate4ServiceNames, 2)
 		mockStore.AssertExpectations(t)
 	})
 }
 
-func TestTypetemplate4YourProjectNameConnectServer_Create(t *testing.T) {
+func TestTypeTemplate4ServiceNameConnectServer_Create(t *testing.T) {
 	t.Run("admin can create", func(t *testing.T) {
 		mockStore := new(MockStorage)
 		mockDB := new(MockDB)
-		server := createTestTypetemplate4YourProjectNameConnectServer(mockStore, mockDB)
+		server := createTestTypeTemplate4ServiceNameConnectServer(mockStore, mockDB)
 
-		expectedTypetemplate4YourProjectName := &Typetemplate4YourProjectName{
+		expectedTypeTemplate4ServiceName := &TypeTemplate4ServiceName{
 			Id:        1,
 			Name:      "New Type",
 			CreatedBy: 123,
 		}
 
-		mockStore.On("CreateTypetemplate4YourProjectName", mock.Anytemplate_4_your_project_name, mock.Anytemplate_4_your_project_nameOfType("Typetemplate4YourProjectName")).Return(expectedTypetemplate4YourProjectName, nil)
+		mockStore.On("CreateTypeTemplate4ServiceName", mock.Anytemplate_4_your_project_name, mock.Anytemplate_4_your_project_nameOfType("TypeTemplate4ServiceName")).Return(expectedTypeTemplate4ServiceName, nil)
 
-		req := createConnectRequest(&template_4_your_project_namev1.Typetemplate4YourProjectNameCreateRequest{
-			Typetemplate4YourProjectName: &template_4_your_project_namev1.Typetemplate4YourProjectName{
+		req := createConnectRequest(&template_4_your_project_namev1.TypeTemplate4ServiceNameCreateRequest{
+			TypeTemplate4ServiceName: &template_4_your_project_namev1.TypeTemplate4ServiceName{
 				Name: "New Type",
 			},
 		})
@@ -341,17 +341,17 @@ func TestTypetemplate4YourProjectNameConnectServer_Create(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.NotNil(t, resp)
-		assert.Equal(t, "New Type", resp.Msg.Typetemplate4YourProjectName.Name)
+		assert.Equal(t, "New Type", resp.Msg.TypeTemplate4ServiceName.Name)
 		mockStore.AssertExpectations(t)
 	})
 
 	t.Run("non-admin rejected", func(t *testing.T) {
 		mockStore := new(MockStorage)
 		mockDB := new(MockDB)
-		server := createTestTypetemplate4YourProjectNameConnectServer(mockStore, mockDB)
+		server := createTestTypeTemplate4ServiceNameConnectServer(mockStore, mockDB)
 
-		req := createConnectRequest(&template_4_your_project_namev1.Typetemplate4YourProjectNameCreateRequest{
-			Typetemplate4YourProjectName: &template_4_your_project_namev1.Typetemplate4YourProjectName{
+		req := createConnectRequest(&template_4_your_project_namev1.TypeTemplate4ServiceNameCreateRequest{
+			TypeTemplate4ServiceName: &template_4_your_project_namev1.TypeTemplate4ServiceName{
 				Name: "New Type",
 			},
 		})

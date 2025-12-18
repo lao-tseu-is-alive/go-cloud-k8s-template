@@ -1,4 +1,4 @@
-package template_4_your_project_name
+package template4gopackage
 
 import (
 	"context"
@@ -12,7 +12,7 @@ import (
 	"github.com/lao-tseu-is-alive/go-cloud-k8s-common-libs/pkg/database"
 )
 
-// BusinessService Business Service contains the transport-agnostic business logic for template4YourProjectName operations
+// BusinessService Business Service contains the transport-agnostic business logic for Template4ServiceName operations
 type BusinessService struct {
 	Log              *slog.Logger
 	DbConn           database.DB
@@ -54,44 +54,44 @@ func (s *BusinessService) GeoJson(ctx context.Context, offset, limit int, params
 }
 
 // List returns the list of template_4_your_project_names based on the given parameters
-func (s *BusinessService) List(ctx context.Context, offset, limit int, params ListParams) ([]*template4YourProjectNameList, error) {
+func (s *BusinessService) List(ctx context.Context, offset, limit int, params ListParams) ([]*Template4ServiceNameList, error) {
 	list, err := s.Store.List(ctx, offset, limit, params)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			// No rows is not an error, return empty slice
-			return make([]*template4YourProjectNameList, 0), nil
+			return make([]*Template4ServiceNameList, 0), nil
 		}
 		return nil, fmt.Errorf("error listing template_4_your_project_names: %w", err)
 	}
 	if list == nil {
-		return make([]*template4YourProjectNameList, 0), nil
+		return make([]*Template4ServiceNameList, 0), nil
 	}
 	return list, nil
 }
 
 // Create creates a new template_4_your_project_name with the given data
-func (s *BusinessService) Create(ctx context.Context, currentUserId int32, newtemplate4YourProjectName template4YourProjectName) (*template4YourProjectName, error) {
+func (s *BusinessService) Create(ctx context.Context, currentUserId int32, newTemplate4ServiceName Template4ServiceName) (*Template4ServiceName, error) {
 	// Validate name
-	if err := validateName(newtemplate4YourProjectName.Name); err != nil {
+	if err := validateName(newTemplate4ServiceName.Name); err != nil {
 		return nil, fmt.Errorf("%w: %v", ErrInvalidInput, err)
 	}
 
 	// Validate TypeId
-	typetemplate4YourProjectNameCount, err := s.DbConn.GetQueryInt(ctx, existTypetemplate4YourProjectName, newtemplate4YourProjectName.TypeId)
-	if err != nil || typetemplate4YourProjectNameCount < 1 {
-		return nil, fmt.Errorf("%w: typeId %v", ErrTypetemplate4YourProjectNameNotFound, newtemplate4YourProjectName.TypeId)
+	typeTemplate4ServiceNameCount, err := s.DbConn.GetQueryInt(ctx, existTypeTemplate4ServiceName, newTemplate4ServiceName.TypeId)
+	if err != nil || typeTemplate4ServiceNameCount < 1 {
+		return nil, fmt.Errorf("%w: typeId %v", ErrTypeTemplate4ServiceNameNotFound, newTemplate4ServiceName.TypeId)
 	}
 
 	// Check if template_4_your_project_name already exists
-	if s.Store.Exist(ctx, newtemplate4YourProjectName.Id) {
-		return nil, fmt.Errorf("%w: id %v", ErrAlreadyExists, newtemplate4YourProjectName.Id)
+	if s.Store.Exist(ctx, newTemplate4ServiceName.Id) {
+		return nil, fmt.Errorf("%w: id %v", ErrAlreadyExists, newTemplate4ServiceName.Id)
 	}
 
 	// Set creator
-	newtemplate4YourProjectName.CreatedBy = currentUserId
+	newTemplate4ServiceName.CreatedBy = currentUserId
 
 	// Create in storage
-	template_4_your_project_nameCreated, err := s.Store.Create(ctx, newtemplate4YourProjectName)
+	template_4_your_project_nameCreated, err := s.Store.Create(ctx, newTemplate4ServiceName)
 	if err != nil {
 		return nil, fmt.Errorf("error creating template_4_your_project_name: %w", err)
 	}
@@ -102,11 +102,11 @@ func (s *BusinessService) Create(ctx context.Context, currentUserId int32, newte
 
 // Count returns the number of template_4_your_project_names based on the given parameters
 func (s *BusinessService) Count(ctx context.Context, params CountParams) (int32, error) {
-	numtemplate4YourProjectNames, err := s.Store.Count(ctx, params)
+	numTemplate4ServiceNames, err := s.Store.Count(ctx, params)
 	if err != nil {
 		return 0, fmt.Errorf("error counting template_4_your_project_names: %w", err)
 	}
-	return numtemplate4YourProjectNames, nil
+	return numTemplate4ServiceNames, nil
 }
 
 // Delete removes a template_4_your_project_name with the given ID
@@ -132,7 +132,7 @@ func (s *BusinessService) Delete(ctx context.Context, currentUserId int32, templ
 }
 
 // Get retrieves a template_4_your_project_name by its ID
-func (s *BusinessService) Get(ctx context.Context, template_4_your_project_nameId uuid.UUID) (*template4YourProjectName, error) {
+func (s *BusinessService) Get(ctx context.Context, template_4_your_project_nameId uuid.UUID) (*Template4ServiceName, error) {
 	// Check if template_4_your_project_name exists
 	if !s.Store.Exist(ctx, template_4_your_project_nameId) {
 		return nil, fmt.Errorf("%w: id %v", ErrNotFound, template_4_your_project_nameId)
@@ -148,7 +148,7 @@ func (s *BusinessService) Get(ctx context.Context, template_4_your_project_nameI
 }
 
 // Update updates a template_4_your_project_name with the given ID
-func (s *BusinessService) Update(ctx context.Context, currentUserId int32, template_4_your_project_nameId uuid.UUID, updatetemplate4YourProjectName template4YourProjectName) (*template4YourProjectName, error) {
+func (s *BusinessService) Update(ctx context.Context, currentUserId int32, template_4_your_project_nameId uuid.UUID, updateTemplate4ServiceName Template4ServiceName) (*Template4ServiceName, error) {
 	// Check if template_4_your_project_name exists
 	if !s.Store.Exist(ctx, template_4_your_project_nameId) {
 		return nil, fmt.Errorf("%w: id %v", ErrNotFound, template_4_your_project_nameId)
@@ -160,21 +160,21 @@ func (s *BusinessService) Update(ctx context.Context, currentUserId int32, templ
 	}
 
 	// Validate name
-	if err := validateName(updatetemplate4YourProjectName.Name); err != nil {
+	if err := validateName(updateTemplate4ServiceName.Name); err != nil {
 		return nil, fmt.Errorf("%w: %v", ErrInvalidInput, err)
 	}
 
 	// Validate TypeId
-	typetemplate4YourProjectNameCount, err := s.DbConn.GetQueryInt(ctx, existTypetemplate4YourProjectName, updatetemplate4YourProjectName.TypeId)
-	if err != nil || typetemplate4YourProjectNameCount < 1 {
-		return nil, fmt.Errorf("%w: typeId %v", ErrTypetemplate4YourProjectNameNotFound, updatetemplate4YourProjectName.TypeId)
+	typeTemplate4ServiceNameCount, err := s.DbConn.GetQueryInt(ctx, existTypeTemplate4ServiceName, updateTemplate4ServiceName.TypeId)
+	if err != nil || typeTemplate4ServiceNameCount < 1 {
+		return nil, fmt.Errorf("%w: typeId %v", ErrTypeTemplate4ServiceNameNotFound, updateTemplate4ServiceName.TypeId)
 	}
 
 	// Set last modifier
-	updatetemplate4YourProjectName.LastModifiedBy = &currentUserId
+	updateTemplate4ServiceName.LastModifiedBy = &currentUserId
 
 	// Update in storage
-	template_4_your_project_nameUpdated, err := s.Store.Update(ctx, template_4_your_project_nameId, updatetemplate4YourProjectName)
+	template_4_your_project_nameUpdated, err := s.Store.Update(ctx, template_4_your_project_nameId, updateTemplate4ServiceName)
 	if err != nil {
 		return nil, fmt.Errorf("error updating template_4_your_project_name: %w", err)
 	}
@@ -184,155 +184,155 @@ func (s *BusinessService) Update(ctx context.Context, currentUserId int32, templ
 }
 
 // ListByExternalId returns template_4_your_project_names filtered by external ID
-func (s *BusinessService) ListByExternalId(ctx context.Context, offset, limit, externalId int) ([]*template4YourProjectNameList, error) {
+func (s *BusinessService) ListByExternalId(ctx context.Context, offset, limit, externalId int) ([]*Template4ServiceNameList, error) {
 	list, err := s.Store.ListByExternalId(ctx, offset, limit, externalId)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			// No rows is not an error, return empty slice
-			return make([]*template4YourProjectNameList, 0), nil
+			return make([]*Template4ServiceNameList, 0), nil
 		}
 		return nil, fmt.Errorf("error listing template_4_your_project_names by external id: %w", err)
 	}
 	if list == nil {
-		return make([]*template4YourProjectNameList, 0), nil
+		return make([]*Template4ServiceNameList, 0), nil
 	}
 	return list, nil
 }
 
 // Search returns template_4_your_project_names based on search criteria
-func (s *BusinessService) Search(ctx context.Context, offset, limit int, params SearchParams) ([]*template4YourProjectNameList, error) {
+func (s *BusinessService) Search(ctx context.Context, offset, limit int, params SearchParams) ([]*Template4ServiceNameList, error) {
 	list, err := s.Store.Search(ctx, offset, limit, params)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			// No rows is not an error, return empty slice
-			return make([]*template4YourProjectNameList, 0), nil
+			return make([]*Template4ServiceNameList, 0), nil
 		}
 		return nil, fmt.Errorf("error searching template_4_your_project_names: %w", err)
 	}
 	if list == nil {
-		return make([]*template4YourProjectNameList, 0), nil
+		return make([]*Template4ServiceNameList, 0), nil
 	}
 	return list, nil
 }
 
-// ListTypetemplate4YourProjectNames returns a list of Typetemplate4YourProjectName based on parameters
-func (s *BusinessService) ListTypetemplate4YourProjectNames(ctx context.Context, offset, limit int, params Typetemplate4YourProjectNameListParams) ([]*Typetemplate4YourProjectNameList, error) {
-	list, err := s.Store.ListTypetemplate4YourProjectName(ctx, offset, limit, params)
+// ListTypeTemplate4ServiceNames returns a list of TypeTemplate4ServiceName based on parameters
+func (s *BusinessService) ListTypeTemplate4ServiceNames(ctx context.Context, offset, limit int, params TypeTemplate4ServiceNameListParams) ([]*TypeTemplate4ServiceNameList, error) {
+	list, err := s.Store.ListTypeTemplate4ServiceName(ctx, offset, limit, params)
 	if err != nil {
 		return nil, fmt.Errorf("error listing type template_4_your_project_names: %w", err)
 	}
 	if list == nil {
-		return make([]*Typetemplate4YourProjectNameList, 0), nil
+		return make([]*TypeTemplate4ServiceNameList, 0), nil
 	}
 	return list, nil
 }
 
-// CreateTypetemplate4YourProjectName creates a new Typetemplate4YourProjectName
-func (s *BusinessService) CreateTypetemplate4YourProjectName(ctx context.Context, currentUserId int32, isAdmin bool, newTypetemplate4YourProjectName Typetemplate4YourProjectName) (*Typetemplate4YourProjectName, error) {
+// CreateTypeTemplate4ServiceName creates a new TypeTemplate4ServiceName
+func (s *BusinessService) CreateTypeTemplate4ServiceName(ctx context.Context, currentUserId int32, isAdmin bool, newTypeTemplate4ServiceName TypeTemplate4ServiceName) (*TypeTemplate4ServiceName, error) {
 	// Check admin privileges
 	if !isAdmin {
 		return nil, ErrAdminRequired
 	}
 
 	// Validate name
-	if err := validateName(newTypetemplate4YourProjectName.Name); err != nil {
+	if err := validateName(newTypeTemplate4ServiceName.Name); err != nil {
 		return nil, fmt.Errorf("%w: %v", ErrInvalidInput, err)
 	}
 
 	// Set creator
-	newTypetemplate4YourProjectName.CreatedBy = currentUserId
+	newTypeTemplate4ServiceName.CreatedBy = currentUserId
 
 	// Create in storage
-	typetemplate4YourProjectNameCreated, err := s.Store.CreateTypetemplate4YourProjectName(ctx, newTypetemplate4YourProjectName)
+	typeTemplate4ServiceNameCreated, err := s.Store.CreateTypeTemplate4ServiceName(ctx, newTypeTemplate4ServiceName)
 	if err != nil {
 		return nil, fmt.Errorf("error creating type template_4_your_project_name: %w", err)
 	}
 
-	s.Log.Info("Created Typetemplate4YourProjectName", "id", typetemplate4YourProjectNameCreated.Id, "userId", currentUserId)
-	return typetemplate4YourProjectNameCreated, nil
+	s.Log.Info("Created TypeTemplate4ServiceName", "id", typeTemplate4ServiceNameCreated.Id, "userId", currentUserId)
+	return typeTemplate4ServiceNameCreated, nil
 }
 
-// CountTypetemplate4YourProjectNames returns the count of Typetemplate4YourProjectNames based on parameters
-func (s *BusinessService) CountTypetemplate4YourProjectNames(ctx context.Context, params Typetemplate4YourProjectNameCountParams) (int32, error) {
-	numtemplate4YourProjectNames, err := s.Store.CountTypetemplate4YourProjectName(ctx, params)
+// CountTypeTemplate4ServiceNames returns the count of TypeTemplate4ServiceNames based on parameters
+func (s *BusinessService) CountTypeTemplate4ServiceNames(ctx context.Context, params TypeTemplate4ServiceNameCountParams) (int32, error) {
+	numTemplate4ServiceNames, err := s.Store.CountTypeTemplate4ServiceName(ctx, params)
 	if err != nil {
 		return 0, fmt.Errorf("error counting type template_4_your_project_names: %w", err)
 	}
-	return numtemplate4YourProjectNames, nil
+	return numTemplate4ServiceNames, nil
 }
 
-// DeleteTypetemplate4YourProjectName deletes a Typetemplate4YourProjectName by ID
-func (s *BusinessService) DeleteTypetemplate4YourProjectName(ctx context.Context, currentUserId int32, isAdmin bool, typetemplate4YourProjectNameId int32) error {
+// DeleteTypeTemplate4ServiceName deletes a TypeTemplate4ServiceName by ID
+func (s *BusinessService) DeleteTypeTemplate4ServiceName(ctx context.Context, currentUserId int32, isAdmin bool, typeTemplate4ServiceNameId int32) error {
 	// Check admin privileges
 	if !isAdmin {
 		return ErrAdminRequired
 	}
 
-	// Check if Typetemplate4YourProjectName exists
-	typetemplate4YourProjectNameCount, err := s.DbConn.GetQueryInt(ctx, existTypetemplate4YourProjectName, typetemplate4YourProjectNameId)
-	if err != nil || typetemplate4YourProjectNameCount < 1 {
-		return fmt.Errorf("%w: id %d", ErrTypetemplate4YourProjectNameNotFound, typetemplate4YourProjectNameId)
+	// Check if TypeTemplate4ServiceName exists
+	typeTemplate4ServiceNameCount, err := s.DbConn.GetQueryInt(ctx, existTypeTemplate4ServiceName, typeTemplate4ServiceNameId)
+	if err != nil || typeTemplate4ServiceNameCount < 1 {
+		return fmt.Errorf("%w: id %d", ErrTypeTemplate4ServiceNameNotFound, typeTemplate4ServiceNameId)
 	}
 
 	// Delete from storage
-	err = s.Store.DeleteTypetemplate4YourProjectName(ctx, typetemplate4YourProjectNameId, currentUserId)
+	err = s.Store.DeleteTypeTemplate4ServiceName(ctx, typeTemplate4ServiceNameId, currentUserId)
 	if err != nil {
 		return fmt.Errorf("error deleting type template_4_your_project_name: %w", err)
 	}
 
-	s.Log.Info("Deleted Typetemplate4YourProjectName", "id", typetemplate4YourProjectNameId, "userId", currentUserId)
+	s.Log.Info("Deleted TypeTemplate4ServiceName", "id", typeTemplate4ServiceNameId, "userId", currentUserId)
 	return nil
 }
 
-// GetTypetemplate4YourProjectName retrieves a Typetemplate4YourProjectName by ID
-func (s *BusinessService) GetTypetemplate4YourProjectName(ctx context.Context, isAdmin bool, typetemplate4YourProjectNameId int32) (*Typetemplate4YourProjectName, error) {
+// GetTypeTemplate4ServiceName retrieves a TypeTemplate4ServiceName by ID
+func (s *BusinessService) GetTypeTemplate4ServiceName(ctx context.Context, isAdmin bool, typeTemplate4ServiceNameId int32) (*TypeTemplate4ServiceName, error) {
 	// Check admin privileges
 	if !isAdmin {
 		return nil, ErrAdminRequired
 	}
 
-	// Check if Typetemplate4YourProjectName exists
-	typetemplate4YourProjectNameCount, err := s.DbConn.GetQueryInt(ctx, existTypetemplate4YourProjectName, typetemplate4YourProjectNameId)
-	if err != nil || typetemplate4YourProjectNameCount < 1 {
-		return nil, fmt.Errorf("%w: id %d", ErrTypetemplate4YourProjectNameNotFound, typetemplate4YourProjectNameId)
+	// Check if TypeTemplate4ServiceName exists
+	typeTemplate4ServiceNameCount, err := s.DbConn.GetQueryInt(ctx, existTypeTemplate4ServiceName, typeTemplate4ServiceNameId)
+	if err != nil || typeTemplate4ServiceNameCount < 1 {
+		return nil, fmt.Errorf("%w: id %d", ErrTypeTemplate4ServiceNameNotFound, typeTemplate4ServiceNameId)
 	}
 
 	// Get from storage
-	typetemplate4YourProjectName, err := s.Store.GetTypetemplate4YourProjectName(ctx, typetemplate4YourProjectNameId)
+	typeTemplate4ServiceName, err := s.Store.GetTypeTemplate4ServiceName(ctx, typeTemplate4ServiceNameId)
 	if err != nil {
 		return nil, fmt.Errorf("error retrieving type template_4_your_project_name: %w", err)
 	}
 
-	return typetemplate4YourProjectName, nil
+	return typeTemplate4ServiceName, nil
 }
 
-// UpdateTypetemplate4YourProjectName updates a Typetemplate4YourProjectName
-func (s *BusinessService) UpdateTypetemplate4YourProjectName(ctx context.Context, currentUserId int32, isAdmin bool, typetemplate4YourProjectNameId int32, updateTypetemplate4YourProjectName Typetemplate4YourProjectName) (*Typetemplate4YourProjectName, error) {
+// UpdateTypeTemplate4ServiceName updates a TypeTemplate4ServiceName
+func (s *BusinessService) UpdateTypeTemplate4ServiceName(ctx context.Context, currentUserId int32, isAdmin bool, typeTemplate4ServiceNameId int32, updateTypeTemplate4ServiceName TypeTemplate4ServiceName) (*TypeTemplate4ServiceName, error) {
 	// Check admin privileges
 	if !isAdmin {
 		return nil, ErrAdminRequired
 	}
 
-	// Check if Typetemplate4YourProjectName exists
-	typetemplate4YourProjectNameCount, err := s.DbConn.GetQueryInt(ctx, existTypetemplate4YourProjectName, typetemplate4YourProjectNameId)
-	if err != nil || typetemplate4YourProjectNameCount < 1 {
-		return nil, fmt.Errorf("%w: id %d", ErrTypetemplate4YourProjectNameNotFound, typetemplate4YourProjectNameId)
+	// Check if TypeTemplate4ServiceName exists
+	typeTemplate4ServiceNameCount, err := s.DbConn.GetQueryInt(ctx, existTypeTemplate4ServiceName, typeTemplate4ServiceNameId)
+	if err != nil || typeTemplate4ServiceNameCount < 1 {
+		return nil, fmt.Errorf("%w: id %d", ErrTypeTemplate4ServiceNameNotFound, typeTemplate4ServiceNameId)
 	}
 
 	// Validate name
-	if err := validateName(updateTypetemplate4YourProjectName.Name); err != nil {
+	if err := validateName(updateTypeTemplate4ServiceName.Name); err != nil {
 		return nil, fmt.Errorf("%w: %v", ErrInvalidInput, err)
 	}
 
 	// Set last modifier
-	updateTypetemplate4YourProjectName.LastModifiedBy = &currentUserId
+	updateTypeTemplate4ServiceName.LastModifiedBy = &currentUserId
 
 	// Update in storage
-	template_4_your_project_nameUpdated, err := s.Store.UpdateTypetemplate4YourProjectName(ctx, typetemplate4YourProjectNameId, updateTypetemplate4YourProjectName)
+	template_4_your_project_nameUpdated, err := s.Store.UpdateTypeTemplate4ServiceName(ctx, typeTemplate4ServiceNameId, updateTypeTemplate4ServiceName)
 	if err != nil {
 		return nil, fmt.Errorf("error updating type template_4_your_project_name: %w", err)
 	}
 
-	s.Log.Info("Updated Typetemplate4YourProjectName", "id", typetemplate4YourProjectNameId, "userId", currentUserId)
+	s.Log.Info("Updated TypeTemplate4ServiceName", "id", typeTemplate4ServiceNameId, "userId", currentUserId)
 	return template_4_your_project_nameUpdated, nil
 }

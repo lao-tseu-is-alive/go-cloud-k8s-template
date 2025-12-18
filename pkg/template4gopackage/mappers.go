@@ -1,6 +1,6 @@
 // Package template_4_your_project_name provides mappers between domain types and Proto types.
 // This bridges the gap between the database layer (Domain) and the API layer (Proto).
-package template_4_your_project_name
+package template4gopackage
 
 import (
 	"time"
@@ -98,33 +98,33 @@ func structToMap(s *structpb.Struct) *map[string]interface{} {
 	return &m
 }
 
-// statusToString converts a *template4YourProjectNameStatus to string
-func statusToString(s *template4YourProjectNameStatus) string {
+// statusToString converts a *Template4ServiceNameStatus to string
+func statusToString(s *Template4ServiceNameStatus) string {
 	if s == nil {
 		return ""
 	}
 	return string(*s)
 }
 
-// stringToStatus converts a string to *template4YourProjectNameStatus
-func stringToStatus(s string) *template4YourProjectNameStatus {
+// stringToStatus converts a string to *Template4ServiceNameStatus
+func stringToStatus(s string) *Template4ServiceNameStatus {
 	if s == "" {
 		return nil
 	}
-	status := template4YourProjectNameStatus(s)
+	status := Template4ServiceNameStatus(s)
 	return &status
 }
 
 // =============================================================================
-// template4YourProjectName Mappers
+// Template4ServiceName Mappers
 // =============================================================================
 
-// Domaintemplate4YourProjectNameToProto converts a domain template4YourProjectName to a Proto template4YourProjectName
-func Domaintemplate4YourProjectNameToProto(t *template4YourProjectName) *template_4_your_project_namev1.template4YourProjectName {
+// DomainTemplate4ServiceNameToProto converts a domain Template4ServiceName to a Proto Template4ServiceName
+func DomainTemplate4ServiceNameToProto(t *Template4ServiceName) *template_4_your_project_namev1.Template4ServiceName {
 	if t == nil {
 		return nil
 	}
-	return &template_4_your_project_namev1.template4YourProjectName{
+	return &template_4_your_project_namev1.Template4ServiceName{
 		Id:                t.Id.String(),
 		TypeId:            t.TypeId,
 		Name:              t.Name,
@@ -157,9 +157,9 @@ func Domaintemplate4YourProjectNameToProto(t *template4YourProjectName) *templat
 	}
 }
 
-// Prototemplate4YourProjectNameToDomain converts a Proto template4YourProjectName to a domain template4YourProjectName.
+// ProtoTemplate4ServiceNameToDomain converts a Proto Template4ServiceName to a domain Template4ServiceName.
 // Returns an error if UUID parsing fails.
-func Prototemplate4YourProjectNameToDomain(t *template_4_your_project_namev1.template4YourProjectName) (*template4YourProjectName, error) {
+func ProtoTemplate4ServiceNameToDomain(t *template_4_your_project_namev1.Template4ServiceName) (*Template4ServiceName, error) {
 	if t == nil {
 		return nil, nil
 	}
@@ -173,7 +173,7 @@ func Prototemplate4YourProjectNameToDomain(t *template_4_your_project_namev1.tem
 		}
 	}
 
-	return &template4YourProjectName{
+	return &Template4ServiceName{
 		Id:                id,
 		TypeId:            t.TypeId,
 		Name:              t.Name,
@@ -206,12 +206,12 @@ func Prototemplate4YourProjectNameToDomain(t *template_4_your_project_namev1.tem
 	}, nil
 }
 
-// Domaintemplate4YourProjectNameListToProto converts a domain template4YourProjectNameList to a Proto template4YourProjectNameList
-func Domaintemplate4YourProjectNameListToProto(t *template4YourProjectNameList) *template_4_your_project_namev1.template4YourProjectNameList {
+// DomainTemplate4ServiceNameListToProto converts a domain Template4ServiceNameList to a Proto Template4ServiceNameList
+func DomainTemplate4ServiceNameListToProto(t *Template4ServiceNameList) *template_4_your_project_namev1.Template4ServiceNameList {
 	if t == nil {
 		return nil
 	}
-	return &template_4_your_project_namev1.template4YourProjectNameList{
+	return &template_4_your_project_namev1.Template4ServiceNameList{
 		Id:          t.Id.String(),
 		TypeId:      t.TypeId,
 		Name:        t.Name,
@@ -227,28 +227,28 @@ func Domaintemplate4YourProjectNameListToProto(t *template4YourProjectNameList) 
 	}
 }
 
-// Domaintemplate4YourProjectNameListSliceToProto converts a slice of domain template4YourProjectNameList to Proto template4YourProjectNameList
-func Domaintemplate4YourProjectNameListSliceToProto(items []*template4YourProjectNameList) []*template_4_your_project_namev1.template4YourProjectNameList {
+// DomainTemplate4ServiceNameListSliceToProto converts a slice of domain Template4ServiceNameList to Proto Template4ServiceNameList
+func DomainTemplate4ServiceNameListSliceToProto(items []*Template4ServiceNameList) []*template_4_your_project_namev1.Template4ServiceNameList {
 	if items == nil {
 		return nil
 	}
-	result := make([]*template_4_your_project_namev1.template4YourProjectNameList, len(items))
+	result := make([]*template_4_your_project_namev1.Template4ServiceNameList, len(items))
 	for i, item := range items {
-		result[i] = Domaintemplate4YourProjectNameListToProto(item)
+		result[i] = DomainTemplate4ServiceNameListToProto(item)
 	}
 	return result
 }
 
 // =============================================================================
-// Typetemplate4YourProjectName Mappers
+// TypeTemplate4ServiceName Mappers
 // =============================================================================
 
-// DomainTypetemplate4YourProjectNameToProto converts a domain Typetemplate4YourProjectName to a Proto Typetemplate4YourProjectName
-func DomainTypetemplate4YourProjectNameToProto(t *Typetemplate4YourProjectName) *template_4_your_project_namev1.Typetemplate4YourProjectName {
+// DomainTypeTemplate4ServiceNameToProto converts a domain TypeTemplate4ServiceName to a Proto TypeTemplate4ServiceName
+func DomainTypeTemplate4ServiceNameToProto(t *TypeTemplate4ServiceName) *template_4_your_project_namev1.TypeTemplate4ServiceName {
 	if t == nil {
 		return nil
 	}
-	return &template_4_your_project_namev1.Typetemplate4YourProjectName{
+	return &template_4_your_project_namev1.TypeTemplate4ServiceName{
 		Id:                t.Id,
 		Name:              t.Name,
 		Description:       derefString(t.Description),
@@ -273,12 +273,12 @@ func DomainTypetemplate4YourProjectNameToProto(t *Typetemplate4YourProjectName) 
 	}
 }
 
-// ProtoTypetemplate4YourProjectNameToDomain converts a Proto Typetemplate4YourProjectName to a domain Typetemplate4YourProjectName
-func ProtoTypetemplate4YourProjectNameToDomain(t *template_4_your_project_namev1.Typetemplate4YourProjectName) *Typetemplate4YourProjectName {
+// ProtoTypeTemplate4ServiceNameToDomain converts a Proto TypeTemplate4ServiceName to a domain TypeTemplate4ServiceName
+func ProtoTypeTemplate4ServiceNameToDomain(t *template_4_your_project_namev1.TypeTemplate4ServiceName) *TypeTemplate4ServiceName {
 	if t == nil {
 		return nil
 	}
-	return &Typetemplate4YourProjectName{
+	return &TypeTemplate4ServiceName{
 		Id:                t.Id,
 		Name:              t.Name,
 		Description:       stringPtr(t.Description),
@@ -303,12 +303,12 @@ func ProtoTypetemplate4YourProjectNameToDomain(t *template_4_your_project_namev1
 	}
 }
 
-// DomainTypetemplate4YourProjectNameListToProto converts a domain Typetemplate4YourProjectNameList to a Proto Typetemplate4YourProjectNameList
-func DomainTypetemplate4YourProjectNameListToProto(t *Typetemplate4YourProjectNameList) *template_4_your_project_namev1.Typetemplate4YourProjectNameList {
+// DomainTypeTemplate4ServiceNameListToProto converts a domain TypeTemplate4ServiceNameList to a Proto TypeTemplate4ServiceNameList
+func DomainTypeTemplate4ServiceNameListToProto(t *TypeTemplate4ServiceNameList) *template_4_your_project_namev1.TypeTemplate4ServiceNameList {
 	if t == nil {
 		return nil
 	}
-	return &template_4_your_project_namev1.Typetemplate4YourProjectNameList{
+	return &template_4_your_project_namev1.TypeTemplate4ServiceNameList{
 		Id:           t.Id,
 		Name:         t.Name,
 		ExternalId:   derefInt32(t.ExternalId),
@@ -320,14 +320,14 @@ func DomainTypetemplate4YourProjectNameListToProto(t *Typetemplate4YourProjectNa
 	}
 }
 
-// DomainTypetemplate4YourProjectNameListSliceToProto converts a slice of domain Typetemplate4YourProjectNameList to Proto
-func DomainTypetemplate4YourProjectNameListSliceToProto(items []*Typetemplate4YourProjectNameList) []*template_4_your_project_namev1.Typetemplate4YourProjectNameList {
+// DomainTypeTemplate4ServiceNameListSliceToProto converts a slice of domain TypeTemplate4ServiceNameList to Proto
+func DomainTypeTemplate4ServiceNameListSliceToProto(items []*TypeTemplate4ServiceNameList) []*template_4_your_project_namev1.TypeTemplate4ServiceNameList {
 	if items == nil {
 		return nil
 	}
-	result := make([]*template_4_your_project_namev1.Typetemplate4YourProjectNameList, len(items))
+	result := make([]*template_4_your_project_namev1.TypeTemplate4ServiceNameList, len(items))
 	for i, item := range items {
-		result[i] = DomainTypetemplate4YourProjectNameListToProto(item)
+		result[i] = DomainTypeTemplate4ServiceNameListToProto(item)
 	}
 	return result
 }

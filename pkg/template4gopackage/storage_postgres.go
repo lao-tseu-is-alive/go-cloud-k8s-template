@@ -1,4 +1,4 @@
-package template_4_your_project_name
+package template4gopackage
 
 import (
 	"context"
@@ -28,18 +28,18 @@ func NewPgxDB(ctx context.Context, db database.DB, log *slog.Logger) (Storage, e
 	psql.Conn = pgConn
 	psql.dbi = db
 	psql.log = log
-	var numberOfTypetemplate4YourProjectNames int
-	errTypetemplate4YourProjectNameTable := pgConn.QueryRow(ctx, typetemplate4YourProjectNameCount).Scan(&numberOfTypetemplate4YourProjectNames)
-	if errTypetemplate4YourProjectNameTable != nil {
-		log.Error("Unable to retrieve the number of typetemplate4YourProjectName", "error", err)
-		return nil, errTypetemplate4YourProjectNameTable
+	var numberOfTypeTemplate4ServiceNames int
+	errTypeTemplate4ServiceNameTable := pgConn.QueryRow(ctx, typeTemplate4ServiceNameCount).Scan(&numberOfTypeTemplate4ServiceNames)
+	if errTypeTemplate4ServiceNameTable != nil {
+		log.Error("Unable to retrieve the number of typeTemplate4ServiceName", "error", err)
+		return nil, errTypeTemplate4ServiceNameTable
 	}
 
-	if numberOfTypetemplate4YourProjectNames > 0 {
-		log.Info("database contains records in template_4_your_project_name_db_schema.type_template_4_your_project_name", "count", numberOfTypetemplate4YourProjectNames)
+	if numberOfTypeTemplate4ServiceNames > 0 {
+		log.Info("database contains records in template_4_your_project_name_db_schema.type_template_4_your_project_name", "count", numberOfTypeTemplate4ServiceNames)
 	} else {
 		log.Warn("template_4_your_project_name_db_schema.type_template_4_your_project_name is empty - it should contain at least one row")
-		return nil, fmt.Errorf("«template_4_your_project_name_db_schema.type_template_4_your_project_name» contains %w should not be empty", numberOfTypetemplate4YourProjectNames)
+		return nil, fmt.Errorf("«template_4_your_project_name_db_schema.type_template_4_your_project_name» contains %w should not be empty", numberOfTypeTemplate4ServiceNames)
 	}
 
 	return &psql, err
@@ -61,16 +61,16 @@ func (db *PGX) GeoJson(ctx context.Context, offset, limit int, params GeoJsonPar
 	if params.Inactivated != nil {
 		isInactive = *params.Inactivated
 	}
-	listtemplate4YourProjectNames := baseGeoJsontemplate4YourProjectNameSearch + listtemplate4YourProjectNamesConditions
+	listTemplate4ServiceNames := baseGeoJsonTemplate4ServiceNameSearch + listTemplate4ServiceNamesConditions
 	if params.Validated != nil {
 		db.log.Debug("params.Validated is not nil ")
 		isValidated := *params.Validated
-		listtemplate4YourProjectNames += " AND validated = coalesce($6, validated) " + geoJsonListEndOfQuery
-		err = pgxscan.Select(ctx, db.Conn, &mayBeResultIsNull, listtemplate4YourProjectNames,
+		listTemplate4ServiceNames += " AND validated = coalesce($6, validated) " + geoJsonListEndOfQuery
+		err = pgxscan.Select(ctx, db.Conn, &mayBeResultIsNull, listTemplate4ServiceNames,
 			limit, offset, &params.Type, &params.CreatedBy, isInactive, isValidated)
 	} else {
-		listtemplate4YourProjectNames += geoJsonListEndOfQuery
-		err = pgxscan.Select(ctx, db.Conn, &mayBeResultIsNull, listtemplate4YourProjectNames,
+		listTemplate4ServiceNames += geoJsonListEndOfQuery
+		err = pgxscan.Select(ctx, db.Conn, &mayBeResultIsNull, listTemplate4ServiceNames,
 			limit, offset, &params.Type, &params.CreatedBy, isInactive)
 	}
 	if err != nil {
@@ -85,7 +85,7 @@ func (db *PGX) GeoJson(ctx context.Context, offset, limit int, params GeoJsonPar
 }
 
 // List returns the list of existing template_4_your_project_names with the given offset and limit.
-func (db *PGX) List(ctx context.Context, offset, limit int, params ListParams) ([]*template4YourProjectNameList, error) {
+func (db *PGX) List(ctx context.Context, offset, limit int, params ListParams) ([]*Template4ServiceNameList, error) {
 	db.log.Debug("trace: entering List", "offset", offset, "limit", limit)
 	if params.Type != nil {
 		db.log.Info("param type", "type", *params.Type)
@@ -94,23 +94,23 @@ func (db *PGX) List(ctx context.Context, offset, limit int, params ListParams) (
 		db.log.Info("params.CreatedBy", "createdBy", *params.CreatedBy)
 	}
 	var (
-		res []*template4YourProjectNameList
+		res []*Template4ServiceNameList
 		err error
 	)
 	isInactive := false
 	if params.Inactivated != nil {
 		isInactive = *params.Inactivated
 	}
-	listtemplate4YourProjectNames := basetemplate4YourProjectNameListQuery + listtemplate4YourProjectNamesConditions
+	listTemplate4ServiceNames := baseTemplate4ServiceNameListQuery + listTemplate4ServiceNamesConditions
 	if params.Validated != nil {
 		db.log.Debug("params.Validated is not nil ")
 		isValidated := *params.Validated
-		listtemplate4YourProjectNames += " AND validated = coalesce($6, validated) " + template_4_your_project_nameListOrderBy
-		err = pgxscan.Select(ctx, db.Conn, &res, listtemplate4YourProjectNames,
+		listTemplate4ServiceNames += " AND validated = coalesce($6, validated) " + template_4_your_project_nameListOrderBy
+		err = pgxscan.Select(ctx, db.Conn, &res, listTemplate4ServiceNames,
 			limit, offset, &params.Type, &params.CreatedBy, isInactive, isValidated)
 	} else {
-		listtemplate4YourProjectNames += template_4_your_project_nameListOrderBy
-		err = pgxscan.Select(ctx, db.Conn, &res, listtemplate4YourProjectNames,
+		listTemplate4ServiceNames += template_4_your_project_nameListOrderBy
+		err = pgxscan.Select(ctx, db.Conn, &res, listTemplate4ServiceNames,
 			limit, offset, &params.Type, &params.CreatedBy, isInactive)
 	}
 	if err != nil {
@@ -125,11 +125,11 @@ func (db *PGX) List(ctx context.Context, offset, limit int, params ListParams) (
 }
 
 // ListByExternalId returns the list of existing template_4_your_project_names having given externalId with the given offset and limit.
-func (db *PGX) ListByExternalId(ctx context.Context, offset, limit int, externalId int) ([]*template4YourProjectNameList, error) {
+func (db *PGX) ListByExternalId(ctx context.Context, offset, limit int, externalId int) ([]*Template4ServiceNameList, error) {
 	db.log.Debug("trace: entering ListByExternalId", "externalId", externalId)
-	var res []*template4YourProjectNameList
-	listByExternalIdtemplate4YourProjectNames := basetemplate4YourProjectNameListQuery + listByExternalIdtemplate4YourProjectNamesCondition + template_4_your_project_nameListOrderBy
-	err := pgxscan.Select(ctx, db.Conn, &res, listByExternalIdtemplate4YourProjectNames, limit, offset, externalId)
+	var res []*Template4ServiceNameList
+	listByExternalIdTemplate4ServiceNames := baseTemplate4ServiceNameListQuery + listByExternalIdTemplate4ServiceNamesCondition + template_4_your_project_nameListOrderBy
+	err := pgxscan.Select(ctx, db.Conn, &res, listByExternalIdTemplate4ServiceNames, limit, offset, externalId)
 	if err != nil {
 		db.log.Error("ListByExternalId failed", "error", err)
 		return nil, err
@@ -141,32 +141,32 @@ func (db *PGX) ListByExternalId(ctx context.Context, offset, limit int, external
 	return res, nil
 }
 
-func (db *PGX) Search(ctx context.Context, offset, limit int, params SearchParams) ([]*template4YourProjectNameList, error) {
+func (db *PGX) Search(ctx context.Context, offset, limit int, params SearchParams) ([]*Template4ServiceNameList, error) {
 	db.log.Debug("trace: entering Search", "offset", offset, "limit", limit)
 	var (
-		res []*template4YourProjectNameList
+		res []*Template4ServiceNameList
 		err error
 	)
-	searchtemplate4YourProjectNames := basetemplate4YourProjectNameListQuery + listtemplate4YourProjectNamesConditions
+	searchTemplate4ServiceNames := baseTemplate4ServiceNameListQuery + listTemplate4ServiceNamesConditions
 	if params.Keywords != nil {
-		searchtemplate4YourProjectNames += " AND text_search @@ plainto_tsquery('french', unaccent($6))"
+		searchTemplate4ServiceNames += " AND text_search @@ plainto_tsquery('french', unaccent($6))"
 		if params.Validated != nil {
-			searchtemplate4YourProjectNames += " AND validated = coalesce($7, validated) " + template_4_your_project_nameListOrderBy
-			err = pgxscan.Select(ctx, db.Conn, &res, searchtemplate4YourProjectNames,
+			searchTemplate4ServiceNames += " AND validated = coalesce($7, validated) " + template_4_your_project_nameListOrderBy
+			err = pgxscan.Select(ctx, db.Conn, &res, searchTemplate4ServiceNames,
 				limit, offset, &params.Type, &params.CreatedBy, &params.Inactivated, &params.Keywords, &params.Validated)
 		} else {
-			searchtemplate4YourProjectNames += template_4_your_project_nameListOrderBy
-			err = pgxscan.Select(ctx, db.Conn, &res, searchtemplate4YourProjectNames,
+			searchTemplate4ServiceNames += template_4_your_project_nameListOrderBy
+			err = pgxscan.Select(ctx, db.Conn, &res, searchTemplate4ServiceNames,
 				limit, offset, &params.Type, &params.CreatedBy, &params.Inactivated, &params.Keywords)
 		}
 	} else {
 		if params.Validated != nil {
-			searchtemplate4YourProjectNames += " AND validated = coalesce($6, validated) " + template_4_your_project_nameListOrderBy
-			err = pgxscan.Select(ctx, db.Conn, &res, searchtemplate4YourProjectNames,
+			searchTemplate4ServiceNames += " AND validated = coalesce($6, validated) " + template_4_your_project_nameListOrderBy
+			err = pgxscan.Select(ctx, db.Conn, &res, searchTemplate4ServiceNames,
 				limit, offset, &params.Type, &params.CreatedBy, &params.Inactivated, &params.Validated)
 		} else {
-			searchtemplate4YourProjectNames += template_4_your_project_nameListOrderBy
-			err = pgxscan.Select(ctx, db.Conn, &res, searchtemplate4YourProjectNames,
+			searchTemplate4ServiceNames += template_4_your_project_nameListOrderBy
+			err = pgxscan.Select(ctx, db.Conn, &res, searchTemplate4ServiceNames,
 				limit, offset, &params.Type, &params.CreatedBy, &params.Inactivated)
 		}
 	}
@@ -183,10 +183,10 @@ func (db *PGX) Search(ctx context.Context, offset, limit int, params SearchParam
 }
 
 // Get will retrieve the template_4_your_project_name with given id
-func (db *PGX) Get(ctx context.Context, id uuid.UUID) (*template4YourProjectName, error) {
+func (db *PGX) Get(ctx context.Context, id uuid.UUID) (*Template4ServiceName, error) {
 	db.log.Debug("trace: entering Get", "id", id)
-	res := &template4YourProjectName{}
-	err := pgxscan.Get(ctx, db.Conn, res, gettemplate4YourProjectName, id)
+	res := &Template4ServiceName{}
+	err := pgxscan.Get(ctx, db.Conn, res, getTemplate4ServiceName, id)
 	if err != nil {
 		db.log.Error("Get failed", "error", err)
 		return nil, err
@@ -201,7 +201,7 @@ func (db *PGX) Get(ctx context.Context, id uuid.UUID) (*template4YourProjectName
 // Exist returns true only if a template_4_your_project_name with the specified id exists in store.
 func (db *PGX) Exist(ctx context.Context, id uuid.UUID) bool {
 	db.log.Debug("trace: entering Exist", "id", id)
-	count, err := db.dbi.GetQueryInt(ctx, existtemplate4YourProjectName, id)
+	count, err := db.dbi.GetQueryInt(ctx, existTemplate4ServiceName, id)
 	if err != nil {
 		db.log.Error("Exist could not be retrieved from DB", "id", id, "error", err)
 		return false
@@ -222,7 +222,7 @@ func (db *PGX) Count(ctx context.Context, params CountParams) (int32, error) {
 		count int
 		err   error
 	)
-	queryCount := counttemplate4YourProjectName + " WHERE _deleted = false AND position IS NOT NULL "
+	queryCount := countTemplate4ServiceName + " WHERE _deleted = false AND position IS NOT NULL "
 	withoutSearchParameters := true
 	if params.Keywords != nil {
 		withoutSearchParameters = false
@@ -266,11 +266,11 @@ func (db *PGX) Count(ctx context.Context, params CountParams) (int32, error) {
 	return int32(count), nil
 }
 
-// Create will store the new template4YourProjectName in the database
-func (db *PGX) Create(ctx context.Context, t template4YourProjectName) (*template4YourProjectName, error) {
+// Create will store the new Template4ServiceName in the database
+func (db *PGX) Create(ctx context.Context, t Template4ServiceName) (*Template4ServiceName, error) {
 	db.log.Debug("trace: entering Create", "name", t.Name, "id", t.Id)
 
-	rowsAffected, err := db.dbi.ExecActionQuery(ctx, createtemplate4YourProjectName,
+	rowsAffected, err := db.dbi.ExecActionQuery(ctx, createTemplate4ServiceName,
 		t.Id, t.TypeId, t.Name, &t.Description, &t.Comment, &t.ExternalId, &t.ExternalRef, //$7
 		&t.BuildAt, &t.Status, &t.ContainedBy, &t.ContainedByOld, t.Validated, &t.ValidatedTime, &t.ValidatedBy, //$14
 		&t.ManagedBy, t.CreatedBy, &t.MoreData, t.PosX, t.PosY)
@@ -285,18 +285,18 @@ func (db *PGX) Create(ctx context.Context, t template4YourProjectName) (*templat
 	db.log.Info("Create success", "name", t.Name, "id", t.Id)
 
 	// if we get to here all is good, so let's retrieve a fresh copy to send it back
-	createdtemplate4YourProjectName, err := db.Get(ctx, t.Id)
+	createdTemplate4ServiceName, err := db.Get(ctx, t.Id)
 	if err != nil {
 		return nil, fmt.Errorf("error %w: template_4_your_project_name was created, but can not be retrieved", err)
 	}
-	return createdtemplate4YourProjectName, nil
+	return createdTemplate4ServiceName, nil
 }
 
 // Update the template_4_your_project_name stored in DB with given id and other information in struct
-func (db *PGX) Update(ctx context.Context, id uuid.UUID, t template4YourProjectName) (*template4YourProjectName, error) {
+func (db *PGX) Update(ctx context.Context, id uuid.UUID, t Template4ServiceName) (*Template4ServiceName, error) {
 	db.log.Debug("trace: entering Update", "id", t.Id)
 
-	rowsAffected, err := db.dbi.ExecActionQuery(ctx, updatetemplate4YourProjectName,
+	rowsAffected, err := db.dbi.ExecActionQuery(ctx, updateTemplate4ServiceName,
 		t.Id, t.TypeId, t.Name, &t.Description, &t.Comment, &t.ExternalId, &t.ExternalRef, //$7
 		&t.BuildAt, &t.Status, &t.ContainedBy, &t.ContainedByOld, t.Inactivated, &t.InactivatedTime, &t.InactivatedBy, &t.InactivatedReason, //$15
 		t.Validated, &t.ValidatedTime, &t.ValidatedBy, //$18
@@ -312,17 +312,17 @@ func (db *PGX) Update(ctx context.Context, id uuid.UUID, t template4YourProjectN
 	}
 
 	// if we get to here all is good, so let's retrieve a fresh copy to send it back
-	updatedtemplate4YourProjectName, err := db.Get(ctx, t.Id)
+	updatedTemplate4ServiceName, err := db.Get(ctx, t.Id)
 	if err != nil {
 		return nil, fmt.Errorf("error %w: template_4_your_project_name was updated, but can not be retrieved", err)
 	}
-	return updatedtemplate4YourProjectName, nil
+	return updatedTemplate4ServiceName, nil
 }
 
 // Delete the template_4_your_project_name stored in DB with given id
 func (db *PGX) Delete(ctx context.Context, id uuid.UUID, userId int32) error {
 	db.log.Debug("trace: entering Delete", "id", id)
-	rowsAffected, err := db.dbi.ExecActionQuery(ctx, deletetemplate4YourProjectName, userId, id)
+	rowsAffected, err := db.dbi.ExecActionQuery(ctx, deleteTemplate4ServiceName, userId, id)
 	if err != nil {
 		db.log.Error("template_4_your_project_name could not be deleted", "id", id, "error", err)
 		return fmt.Errorf("template_4_your_project_name could not be deleted: %w", err)
@@ -334,19 +334,19 @@ func (db *PGX) Delete(ctx context.Context, id uuid.UUID, userId int32) error {
 	return nil
 }
 
-// Istemplate4YourProjectNameActive returns true if the template_4_your_project_name with the specified id has the inactivated attribute set to false
-func (db *PGX) Istemplate4YourProjectNameActive(ctx context.Context, id uuid.UUID) bool {
-	db.log.Debug("trace: entering Istemplate4YourProjectNameActive", "id", id)
-	count, err := db.dbi.GetQueryInt(ctx, isActivetemplate4YourProjectName, id)
+// IsTemplate4ServiceNameActive returns true if the template_4_your_project_name with the specified id has the inactivated attribute set to false
+func (db *PGX) IsTemplate4ServiceNameActive(ctx context.Context, id uuid.UUID) bool {
+	db.log.Debug("trace: entering IsTemplate4ServiceNameActive", "id", id)
+	count, err := db.dbi.GetQueryInt(ctx, isActiveTemplate4ServiceName, id)
 	if err != nil {
-		db.log.Error("Istemplate4YourProjectNameActive could not be retrieved from DB", "id", id, "error", err)
+		db.log.Error("IsTemplate4ServiceNameActive could not be retrieved from DB", "id", id, "error", err)
 		return false
 	}
 	if count > 0 {
-		db.log.Info("Istemplate4YourProjectNameActive is true", "id", id, "count", count)
+		db.log.Info("IsTemplate4ServiceNameActive is true", "id", id, "count", count)
 		return true
 	} else {
-		db.log.Info("Istemplate4YourProjectNameActive is false", "id", id, "count", count)
+		db.log.Info("IsTemplate4ServiceNameActive is false", "id", id, "count", count)
 		return false
 	}
 }
@@ -354,7 +354,7 @@ func (db *PGX) Istemplate4YourProjectNameActive(ctx context.Context, id uuid.UUI
 // IsUserOwner returns true only if userId is the creator of the record (owner) of this template_4_your_project_name in store.
 func (db *PGX) IsUserOwner(ctx context.Context, id uuid.UUID, userId int32) bool {
 	db.log.Debug("trace: entering IsUserOwner", "id", id, "userId", userId)
-	count, err := db.dbi.GetQueryInt(ctx, existtemplate4YourProjectNameOwnedBy, id, userId)
+	count, err := db.dbi.GetQueryInt(ctx, existTemplate4ServiceNameOwnedBy, id, userId)
 	if err != nil {
 		db.log.Error("IsUserOwner could not be retrieved from DB", "id", id, "userId", userId, "error", err)
 		return false
@@ -368,30 +368,30 @@ func (db *PGX) IsUserOwner(ctx context.Context, id uuid.UUID, userId int32) bool
 	}
 }
 
-// CreateTypetemplate4YourProjectName will store the new Typetemplate4YourProjectName in the database
-func (db *PGX) CreateTypetemplate4YourProjectName(ctx context.Context, tt Typetemplate4YourProjectName) (*Typetemplate4YourProjectName, error) {
-	db.log.Debug("trace: entering CreateTypetemplate4YourProjectName", "name", tt.Name, "createdBy", tt.CreatedBy)
+// CreateTypeTemplate4ServiceName will store the new TypeTemplate4ServiceName in the database
+func (db *PGX) CreateTypeTemplate4ServiceName(ctx context.Context, tt TypeTemplate4ServiceName) (*TypeTemplate4ServiceName, error) {
+	db.log.Debug("trace: entering CreateTypeTemplate4ServiceName", "name", tt.Name, "createdBy", tt.CreatedBy)
 	var lastInsertId int = 0
-	err := db.Conn.QueryRow(ctx, createTypetemplate4YourProjectName,
+	err := db.Conn.QueryRow(ctx, createTypeTemplate4ServiceName,
 		tt.Name, &tt.Description, &tt.Comment, &tt.ExternalId, &tt.TableName, &tt.GeometryType, //$6
 		&tt.ManagedBy, tt.IconPath, tt.CreatedBy, &tt.MoreDataSchema).Scan(&lastInsertId)
 	if err != nil {
-		db.log.Error("CreateTypetemplate4YourProjectName unexpectedly failed", "name", tt.Name, "error", err)
+		db.log.Error("CreateTypeTemplate4ServiceName unexpectedly failed", "name", tt.Name, "error", err)
 		return nil, err
 	}
-	db.log.Info("CreateTypetemplate4YourProjectName success", "name", tt.Name, "id", lastInsertId)
+	db.log.Info("CreateTypeTemplate4ServiceName success", "name", tt.Name, "id", lastInsertId)
 
 	// if we get to here all is good, so let's retrieve a fresh copy to send it back
-	createdTypetemplate4YourProjectName, err := db.GetTypetemplate4YourProjectName(ctx, int32(lastInsertId))
+	createdTypeTemplate4ServiceName, err := db.GetTypeTemplate4ServiceName(ctx, int32(lastInsertId))
 	if err != nil {
-		return nil, fmt.Errorf("error %w: typetemplate4YourProjectName was created, but can not be retrieved", err)
+		return nil, fmt.Errorf("error %w: typeTemplate4ServiceName was created, but can not be retrieved", err)
 	}
-	return createdTypetemplate4YourProjectName, nil
+	return createdTypeTemplate4ServiceName, nil
 }
 
-// UpdateTypetemplate4YourProjectName updates the Typetemplate4YourProjectName stored in DB with given id and other information in struct
-func (db *PGX) UpdateTypetemplate4YourProjectName(ctx context.Context, id int32, tt Typetemplate4YourProjectName) (*Typetemplate4YourProjectName, error) {
-	db.log.Debug("trace: entering UpdateTypetemplate4YourProjectName", "id", id)
+// UpdateTypeTemplate4ServiceName updates the TypeTemplate4ServiceName stored in DB with given id and other information in struct
+func (db *PGX) UpdateTypeTemplate4ServiceName(ctx context.Context, id int32, tt TypeTemplate4ServiceName) (*TypeTemplate4ServiceName, error) {
+	db.log.Debug("trace: entering UpdateTypeTemplate4ServiceName", "id", id)
 
 	rowsAffected, err := db.dbi.ExecActionQuery(ctx, updateTypeTing,
 		id, tt.Name, &tt.Description, &tt.Comment, &tt.ExternalId, &tt.TableName, //$6
@@ -399,26 +399,26 @@ func (db *PGX) UpdateTypetemplate4YourProjectName(ctx context.Context, id int32,
 		&tt.ManagedBy, tt.IconPath, &tt.LastModifiedBy, &tt.MoreDataSchema) //$14
 	if err != nil {
 
-		db.log.Error("UpdateTypetemplate4YourProjectName unexpectedly failed", "id", id, "error", err)
+		db.log.Error("UpdateTypeTemplate4ServiceName unexpectedly failed", "id", id, "error", err)
 		return nil, err
 	}
 	if rowsAffected < 1 {
-		db.log.Error("UpdateTypetemplate4YourProjectName no row was updated", "id", id)
+		db.log.Error("UpdateTypeTemplate4ServiceName no row was updated", "id", id)
 		return nil, err
 	}
 
 	// if we get to here all is good, so let's retrieve a fresh copy to send it back
-	updatedTypetemplate4YourProjectName, err := db.GetTypetemplate4YourProjectName(ctx, id)
+	updatedTypeTemplate4ServiceName, err := db.GetTypeTemplate4ServiceName(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("error %w: template_4_your_project_name was updated, but can not be retrieved", err)
 	}
-	return updatedTypetemplate4YourProjectName, nil
+	return updatedTypeTemplate4ServiceName, nil
 }
 
-// DeleteTypetemplate4YourProjectName deletes the Typetemplate4YourProjectName stored in DB with given id
-func (db *PGX) DeleteTypetemplate4YourProjectName(ctx context.Context, id int32, userId int32) error {
-	db.log.Debug("trace: entering DeleteTypetemplate4YourProjectName", "id", id)
-	rowsAffected, err := db.dbi.ExecActionQuery(ctx, deleteTypetemplate4YourProjectName, userId, id)
+// DeleteTypeTemplate4ServiceName deletes the TypeTemplate4ServiceName stored in DB with given id
+func (db *PGX) DeleteTypeTemplate4ServiceName(ctx context.Context, id int32, userId int32) error {
+	db.log.Debug("trace: entering DeleteTypeTemplate4ServiceName", "id", id)
+	rowsAffected, err := db.dbi.ExecActionQuery(ctx, deleteTypeTemplate4ServiceName, userId, id)
 	if err != nil {
 		db.log.Error("typetemplate_4_your_project_name could not be deleted", "id", id, "error", err)
 		return fmt.Errorf("typetemplate_4_your_project_name could not be deleted: %w", err)
@@ -430,59 +430,59 @@ func (db *PGX) DeleteTypetemplate4YourProjectName(ctx context.Context, id int32,
 	return nil
 }
 
-// ListTypetemplate4YourProjectName returns the list of existing Typetemplate4YourProjectName with the given offset and limit.
-func (db *PGX) ListTypetemplate4YourProjectName(ctx context.Context, offset, limit int, params Typetemplate4YourProjectNameListParams) ([]*Typetemplate4YourProjectNameList, error) {
-	db.log.Debug("trace : entering ListTypetemplate4YourProjectName")
+// ListTypeTemplate4ServiceName returns the list of existing TypeTemplate4ServiceName with the given offset and limit.
+func (db *PGX) ListTypeTemplate4ServiceName(ctx context.Context, offset, limit int, params TypeTemplate4ServiceNameListParams) ([]*TypeTemplate4ServiceNameList, error) {
+	db.log.Debug("trace : entering ListTypeTemplate4ServiceName")
 	var (
-		res []*Typetemplate4YourProjectNameList
+		res []*TypeTemplate4ServiceNameList
 		err error
 	)
-	listTypetemplate4YourProjectNames := typetemplate4YourProjectNameListQuery
+	listTypeTemplate4ServiceNames := typeTemplate4ServiceNameListQuery
 	if params.Keywords != nil {
-		listTypetemplate4YourProjectNames += listTypetemplate4YourProjectNamesConditionsWithKeywords + typetemplate4YourProjectNameListOrderBy
-		err = pgxscan.Select(ctx, db.Conn, &res, listTypetemplate4YourProjectNames,
+		listTypeTemplate4ServiceNames += listTypeTemplate4ServiceNamesConditionsWithKeywords + typeTemplate4ServiceNameListOrderBy
+		err = pgxscan.Select(ctx, db.Conn, &res, listTypeTemplate4ServiceNames,
 			limit, offset, &params.Keywords, &params.CreatedBy, &params.ExternalId, &params.Inactivated)
 	} else {
-		listTypetemplate4YourProjectNames += listTypetemplate4YourProjectNamesConditionsWithoutKeywords + typetemplate4YourProjectNameListOrderBy
-		err = pgxscan.Select(ctx, db.Conn, &res, listTypetemplate4YourProjectNames,
+		listTypeTemplate4ServiceNames += listTypeTemplate4ServiceNamesConditionsWithoutKeywords + typeTemplate4ServiceNameListOrderBy
+		err = pgxscan.Select(ctx, db.Conn, &res, listTypeTemplate4ServiceNames,
 			limit, offset, &params.CreatedBy, &params.ExternalId, &params.Inactivated)
 	}
 
 	if err != nil {
-		db.log.Error("ListTypetemplate4YourProjectName failed", "error", err)
+		db.log.Error("ListTypeTemplate4ServiceName failed", "error", err)
 		return nil, err
 	}
 	if res == nil {
-		db.log.Info("ListTypetemplate4YourProjectName returned no results")
+		db.log.Info("ListTypeTemplate4ServiceName returned no results")
 		return nil, pgx.ErrNoRows
 	}
 	return res, nil
 }
 
-// GetTypetemplate4YourProjectName will retrieve the Typetemplate4YourProjectName with given id
-func (db *PGX) GetTypetemplate4YourProjectName(ctx context.Context, id int32) (*Typetemplate4YourProjectName, error) {
-	db.log.Debug("trace: entering GetTypetemplate4YourProjectName", "id", id)
-	res := &Typetemplate4YourProjectName{}
-	err := pgxscan.Get(ctx, db.Conn, res, getTypetemplate4YourProjectName, id)
+// GetTypeTemplate4ServiceName will retrieve the TypeTemplate4ServiceName with given id
+func (db *PGX) GetTypeTemplate4ServiceName(ctx context.Context, id int32) (*TypeTemplate4ServiceName, error) {
+	db.log.Debug("trace: entering GetTypeTemplate4ServiceName", "id", id)
+	res := &TypeTemplate4ServiceName{}
+	err := pgxscan.Get(ctx, db.Conn, res, getTypeTemplate4ServiceName, id)
 	if err != nil {
-		db.log.Error("GetTypetemplate4YourProjectName failed", "error", err)
+		db.log.Error("GetTypeTemplate4ServiceName failed", "error", err)
 		return nil, err
 	}
 	if res == nil {
-		db.log.Info("GetTypetemplate4YourProjectName returned no results", "id", id)
+		db.log.Info("GetTypeTemplate4ServiceName returned no results", "id", id)
 		return nil, pgx.ErrNoRows
 	}
 	return res, nil
 }
 
-// CountTypetemplate4YourProjectName returns the number of Typetemplate4YourProjectName based on search criteria
-func (db *PGX) CountTypetemplate4YourProjectName(ctx context.Context, params Typetemplate4YourProjectNameCountParams) (int32, error) {
-	db.log.Debug("trace : entering CountTypetemplate4YourProjectName()")
+// CountTypeTemplate4ServiceName returns the number of TypeTemplate4ServiceName based on search criteria
+func (db *PGX) CountTypeTemplate4ServiceName(ctx context.Context, params TypeTemplate4ServiceNameCountParams) (int32, error) {
+	db.log.Debug("trace : entering CountTypeTemplate4ServiceName()")
 	var (
 		count int
 		err   error
 	)
-	queryCount := countTypetemplate4YourProjectName + " WHERE 1 = 1 "
+	queryCount := countTypeTemplate4ServiceName + " WHERE 1 = 1 "
 	withoutSearchParameters := true
 	if params.Keywords != nil {
 		withoutSearchParameters = false
@@ -501,18 +501,18 @@ func (db *PGX) CountTypetemplate4YourProjectName(ctx context.Context, params Typ
 
 	}
 	if err != nil {
-		db.log.Error("CountTypetemplate4YourProjectName failed", "error", err)
+		db.log.Error("CountTypeTemplate4ServiceName failed", "error", err)
 		return 0, err
 	}
 	return int32(count), nil
 }
 
-// GetTypetemplate4YourProjectNameMaxId will retrieve maximum value of Typetemplate4YourProjectName id existing in store.
-func (db *PGX) GetTypetemplate4YourProjectNameMaxId(ctx context.Context) (int32, error) {
-	db.log.Debug("trace : entering GetTypetemplate4YourProjectNameMaxId")
-	existingMaxId, err := db.dbi.GetQueryInt(ctx, typetemplate4YourProjectNameMaxId)
+// GetTypeTemplate4ServiceNameMaxId will retrieve maximum value of TypeTemplate4ServiceName id existing in store.
+func (db *PGX) GetTypeTemplate4ServiceNameMaxId(ctx context.Context) (int32, error) {
+	db.log.Debug("trace : entering GetTypeTemplate4ServiceNameMaxId")
+	existingMaxId, err := db.dbi.GetQueryInt(ctx, typeTemplate4ServiceNameMaxId)
 	if err != nil {
-		db.log.Error("GetTypetemplate4YourProjectNameMaxId() failed", "error", err)
+		db.log.Error("GetTypeTemplate4ServiceNameMaxId() failed", "error", err)
 		return 0, err
 	}
 	return int32(existingMaxId), nil

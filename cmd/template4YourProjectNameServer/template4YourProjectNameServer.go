@@ -357,21 +357,21 @@ func main() {
 
 	dbStorageCtx, dbStorageCancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer dbStorageCancel()
-	template_4_your_project_nameStore := template_4_your_project_name.GetStorageInstanceOrPanic(dbStorageCtx, "pgx", db, l)
+	template_4_your_project_nameStore := template4gopackage.GetStorageInstanceOrPanic(dbStorageCtx, "pgx", db, l)
 
 	// Create business service (transport-agnostic)
-	template_4_your_project_nameBusinessService := template_4_your_project_name.NewBusinessService(template_4_your_project_nameStore, db, l, 50)
+	template_4_your_project_nameBusinessService := template4gopackage.NewBusinessService(template_4_your_project_nameStore, db, l, 50)
 
 	// ---------------------------------------------------------
 	// Connect + Vanguard: REST/gRPC/Connect transcoding
 	// ---------------------------------------------------------
 	// Create auth interceptor for JWT validation
-	authInterceptor := template_4_your_project_name.NewAuthInterceptor(myJwt, l)
+	authInterceptor := template4gopackage.NewAuthInterceptor(myJwt, l)
 	interceptors := connect.WithInterceptors(authInterceptor)
 
 	// Create Connect servers (auth is handled by interceptor, not servers)
-	template_4_your_project_nameConnectServer := template_4_your_project_name.Newtemplate4YourProjectNameConnectServer(template_4_your_project_nameBusinessService, l)
-	typetemplate4YourProjectNameConnectServer := template_4_your_project_name.NewTypetemplate4YourProjectNameConnectServer(template_4_your_project_nameBusinessService, l)
+	template_4_your_project_nameConnectServer := template4gopackage.Newtemplate4YourProjectNameConnectServer(template_4_your_project_nameBusinessService, l)
+	typetemplate4YourProjectNameConnectServer := template4gopackage.NewTypetemplate4YourProjectNameConnectServer(template_4_your_project_nameBusinessService, l)
 
 	// Create service handlers with auth interceptor
 	_, template_4_your_project_nameHandler := template_4_your_project_namev1connect.Newtemplate4YourProjectNameServiceHandler(template_4_your_project_nameConnectServer, interceptors)

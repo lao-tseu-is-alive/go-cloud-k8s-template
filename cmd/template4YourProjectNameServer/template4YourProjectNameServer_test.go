@@ -153,8 +153,8 @@ func TestMainExec(t *testing.T) {
 	listenAddr := fmt.Sprintf("http://localhost:%d", listenPort)
 	fmt.Printf("INFO: 'Will start HTTP server listening on port %s'\n", listenAddr)
 	// common messages
-	nameCannotBeEmpty := fmt.Sprintf(template_4_your_project_name.FieldCannotBeEmpty, "name")
-	nameMinLenghtMsg := fmt.Sprintf(template_4_your_project_name.FieldMinLengthIsN, "name", template_4_your_project_name.MinNameLength)
+	nameCannotBeEmpty := fmt.Sprintf(template4gopackage.FieldCannotBeEmpty, "name")
+	nameMinLenghtMsg := fmt.Sprintf(template4gopackage.FieldMinLengthIsN, "name", template4gopackage.MinNameLength)
 	newRequest := func(method, url string, body string, useFormUrlencodedContentType bool) *http.Request {
 		fmt.Printf("INFO: 🚀🚀'newRequest %s on %s ##BODY : %+v'\n", method, url, body)
 		r, err := http.NewRequest(method, url, strings.NewReader(body))
