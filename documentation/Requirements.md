@@ -25,7 +25,6 @@ The application should be usable as a _web app_ and use the
 11. Keep automatically track of when and who creates a template4YourProjectName.
 12. Keep automatically track of when was done the last modification to a template4YourProjectName and who has done it
 13. Keep automatically track of when and who  deletes a template4YourProjectName, mark the template4YourProjectName as deleted but do not remove the record from the database. The usual list and search should not return a record of template4YourProjectName marked for deletion
-14. Include the position of a template_4_your_project_name  in Swiss Coordinates in the template4YourProjectName attributes
 15. Include the current status of a template4YourProjectName as an Enum attribute
 16. Allow a record of a template4YourProjectName to be "inactive"
 17. Keep track of when and who someone mark a template4YourProjectName as inactive, allow to enter an inactivation reason

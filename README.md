@@ -196,7 +196,6 @@ Find all available versions in the [Packages section](https://github.com/your-gi
 
 - 📋 [Requirements](./documentation/Requirements.md) — Functional and system requirements
 - 🔗 [OpenAPI Spec (YAML)](./api/openapi/template_4_your_project_name.yaml) — Generated from proto
-- 🌐 [Swagger UI](https://your-github-account.github.io/template-4-your-project-name/) — Interactive API docs
 
 ---
 
