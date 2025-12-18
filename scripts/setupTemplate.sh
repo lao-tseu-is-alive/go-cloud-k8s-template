@@ -20,78 +20,80 @@ extract() {
   grep -E "${var_name}\s*=\s*\"" "$VERSION_FILE" | sed -E 's/.*=\s*"([^"]+)".*/\1/'
 }
 
-APP_NAME_CAMEL=$(extract "AppNameCamel")
+APP_NAME=$(extract "AppName")
+APP_GO_PACKAGE=$(extract "GoPackage")
+APP_SERVICE_NAME=$(extract "ServiceName")
+APP_DB_SCHEMA=$(extract "DbSchemaName")
+APP_NAME_KEBAB=$(extract "AppNameKebab")
 APP_NAME_SNAKE=$(extract "AppNameSnake")
 APP_BINARY=$(extract "AppBinary")
-APP=$(extract "App")
 REPOSITORY=$(extract "Repository")
 
 # Fallback checks
-if [[ -z "$APP_NAME_CAMEL" || -z "$APP_NAME_SNAKE" || -z "$APP_BINARY" || -z "$APP" || -z "$REPOSITORY" ]]; then
+if [[ -z "$APP_NAME" || -z "$APP_GO_PACKAGE" || -z "$APP_SERVICE_NAME" || -z "$APP_DB_SCHEMA" || -z "$APP_NAME_KEBAB" || -z "$APP_NAME_SNAKE" || -z "$APP_BINARY" || -z "$REPOSITORY" ]]; then
   echo "Error: Failed to extract one or more values from $VERSION_FILE. Check the file format."
   echo "Make sure each variable is on its own line like: VarName = \"value\""
   exit 1
 fi
 
 echo "Detected values:"
-echo "  AppNameCamel: $APP_NAME_CAMEL"
-echo "  AppNameSnake: $APP_NAME_SNAKE"
-echo "  AppBinary:    $APP_BINARY"
-echo "  App:          $APP"
-echo "  Repository:   $REPOSITORY"
+echo "  AppName:        $APP_NAME"
+echo "  GoPackage:      $APP_GO_PACKAGE"
+echo "  ServiceName:    $APP_SERVICE_NAME"
+echo "  DbSchemaName:   $APP_DB_SCHEMA"
+echo "  AppNameKebab:   $APP_NAME_KEBAB"
+echo "  AppNameSnake:   $APP_NAME_SNAKE"
+echo "  AppBinary:      $APP_BINARY"
+echo "  Repository:     $REPOSITORY"
 
 read -p "Continue with these values? (y/n): " confirm
 [[ "$confirm" =~ ^[yY]$ ]] || { echo "Aborted."; exit 0; }
 
 # Step 1: Rename directories and files
-echo "Renaming directories and files..."
-
-OLD_CMD="cmd/goCloudK8sThingServer"
-NEW_CMD="cmd/$APP_BINARY"
-if [ -d "$OLD_CMD" ]; then
-  git mv "$OLD_CMD" "$NEW_CMD" || echo "Failed to rename cmd (already done?)."
-else
-  echo "Info: $OLD_CMD not found – likely already renamed or not present."
+if [[ -f "./cmd/template4YourProjectNameServer" ]]; then
+  echo "Renaming cmd directories and files..."
+  git mv ./cmd/template4YourProjectNameServer/template4YourProjectNameServer.go ./cmd/template4YourProjectNameServer/"$APP_BINARY"Server.go
+  git mv ./cmd/template4YourProjectNameServer/template4YourProjectNameServer_test.go ./cmd/template4YourProjectNameServer/"$APP_BINARY"Server_test.go
+  git mv ./cmd/template4YourProjectNameServer/template4YourProjectNameFront ./cmd/template4YourProjectNameServer/"$APP_BINARY"Front
+  git mv ./cmd/template4YourProjectNameServer ./cmd/"$APP_BINARY"Server
+fi
+if [[ -f "./pkg/template4gopackage" ]]; then
+  echo "Renaming pkg directories and files..."
+  git mv ./pkg/template4gopackage "./pkg/${APP_GO_PACKAGE}"
+fi
+if [[ -f "./pkg/template4gopackage" ]]; then
+  echo "Renaming api/proto directories and files..."
+  git mv ./api/proto/template_4_your_project_name/v1/template_4_your_project_name.proto  "./api/proto/template_4_your_project_name/v1/$APP_GO_PACKAGE.proto"
+  git mv ./api/proto/template_4_your_project_name/ "./api/proto/$APP_GO_PACKAGE"
 fi
 
-# Rename thing → new snake name in common paths
-for base in "api/proto" "gen" "pkg"; do
-  old_path="${base}/thing"
-  new_path="${base}/$APP_NAME_SNAKE"
-  if [ -d "$old_path" ]; then
-    git mv "$old_path" "$new_path"
-  fi
-done
-
-# Rename proto files: thing*.proto → template*.proto
-if [ -d "api/proto/$APP_NAME_SNAKE/v1" ]; then
-  for file in api/proto/"$APP_NAME_SNAKE"/v1/thing*.proto; do
-    [ -f "$file" ] || continue
-    new_file="${file/thing/$APP_NAME_SNAKE}"
-    git mv "$file" "$new_file"
-  done
-fi
 
 # Step 2: String replacements (safe delimiter |)
 echo "Replacing strings in files..."
+SED_INPLACE=(-i)
+
+if sed --version >/dev/null 2>&1; then
+  # GNU sed (Linux)
+  SED_INPLACE=(-i)
+else
+  # BSD sed (macOS)
+  SED_INPLACE=(-i '')
+fi
 
 find . -type f \
-  \( -name '*.go' -o -name '*.proto' -o -name '*.yaml' -o -name '*.yml' -o -name 'Dockerfile' -o -name 'Makefile' -o -name '*.md' -o -name '*.sh' -o -name '*.env*' -o -name '*.sql' \) \
+  \( -name '*.go' -o -name 'go.mod' -o -name '*.yaml' -o -name '*.yml' -o -name '*.proto' -o -name 'Dockerfile' -o -name 'Makefile' -o -name '*.md' -o -wholename 'scripts/buf_generate.sh' -o -name '*.env*' -o -name '*.sql' \) \
   ! -path './.git/*' ! -path './gen/*' \
-  -print0 | xargs -0 sed -i '' \
-    -e "s|goCloudK8sThingServer|$APP_BINARY|g" \
-    -e "s|goCloudK8sThing|$APP|g" \
-    -e "s|Thing|$APP_NAME_CAMEL|g" \
-    -e "s|thing|$APP_NAME_SNAKE|g"
+  -print0 | xargs -0 sed "${SED_INPLACE[@]}" \
+    -e "s|template4YourProjectNameServer|$APP_BINARY|g" \
+    -e "s|github.com/your-github-account/template-4-your-project-name|$REPOSITORY|g" \
+    -e "s|template4gopackage|$APP_GO_PACKAGE|g" \
+    -e "s|Template4ServiceName|$APP_SERVICE_NAME|g" \
+    -e "s|template_4_your_project_name_db_schema|$APP_DB_SCHEMA|g" \
+    -e "s|template-4-your-project-name|$APP_NAME_KEBAB|g" \
+    -e "s|template_4_your_project_name|$APP_NAME_SNAKE|g" \
+    -e "s|template4YourProjectName|$APP_NAME|g"
 
 # Note: macOS sed uses -i '', Linux uses -i (no backup). This works on both.
-
-# Step 3: Update go.mod
-if [ -f go.mod ]; then
-  REPO_PATH=$(echo "$REPOSITORY" | sed -E 's|^https?://github\.com/||')
-  sed -i '' "s|module .*|module $REPO_PATH|g" go.mod
-  echo "Updated go.mod to module $REPO_PATH"
-fi
 
 # Step 4: Regenerate protobufs
 echo "Regenerating protobuf code..."
@@ -105,13 +107,7 @@ fi
 
 go mod tidy
 
-# Step 5: Commit
-read -p "Commit changes? (y/n): " commit
-if [[ "$commit" =~ ^[yY]$ ]]; then
-  git add .
-  git commit -m "chore: apply template customization from version.go"
-fi
 
 echo ""
-echo "Setup complete! Your project is now customized for '$APP_NAME_CAMEL'."
+echo "Setup complete! Your project is now customized for '$APP_NAME'."
 echo "Review changes, run tests, and push when ready."
