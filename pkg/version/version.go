@@ -23,9 +23,6 @@ var (
 	// AppNameSnake is the snake-case version for database or directory (e.g., "user", "product")
 	AppNameSnake = "template_4_your_project_name"
 
-	// AppBinary is the full binary name (e.g., "userServer")
-	AppBinary = "template4YourProjectNameServer"
-
 	// Repository is the full GitHub repo URL
 	Repository = "https://github.com/your-github-account/template-4-your-project-name"
 

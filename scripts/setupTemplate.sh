@@ -26,7 +26,6 @@ APP_SERVICE_NAME=$(extract "ServiceName")
 APP_DB_SCHEMA=$(extract "DbSchemaName")
 APP_NAME_KEBAB=$(extract "AppNameKebab")
 APP_NAME_SNAKE=$(extract "AppNameSnake")
-APP_BINARY=$(extract "AppBinary")
 REPOSITORY=$(extract "Repository")
 
 # Fallback checks
@@ -43,7 +42,6 @@ echo "  ServiceName:    $APP_SERVICE_NAME"
 echo "  DbSchemaName:   $APP_DB_SCHEMA"
 echo "  AppNameKebab:   $APP_NAME_KEBAB"
 echo "  AppNameSnake:   $APP_NAME_SNAKE"
-echo "  AppBinary:      $APP_BINARY"
 echo "  Repository:     $REPOSITORY"
 
 read -p "Continue with these values? (y/n): " confirm
@@ -52,10 +50,10 @@ read -p "Continue with these values? (y/n): " confirm
 # Step 1: Rename directories and files
 if [[ -f "./cmd/template4YourProjectNameServer" ]]; then
   echo "Renaming cmd directories and files..."
-  git mv ./cmd/template4YourProjectNameServer/template4YourProjectNameServer.go ./cmd/template4YourProjectNameServer/"$APP_BINARY"Server.go
-  git mv ./cmd/template4YourProjectNameServer/template4YourProjectNameServer_test.go ./cmd/template4YourProjectNameServer/"$APP_BINARY"Server_test.go
+  git mv ./cmd/template4YourProjectNameServer/template4YourProjectNameServer.go ./cmd/template4YourProjectNameServer/"$APP_NAME"Server.go
+  git mv ./cmd/template4YourProjectNameServer/template4YourProjectNameServer_test.go ./cmd/template4YourProjectNameServer/"$APP_NAME"Server_test.go
   git mv ./cmd/template4YourProjectNameServer/template4YourProjectNameFront ./cmd/template4YourProjectNameServer/"$APP_BINARY"Front
-  git mv ./cmd/template4YourProjectNameServer ./cmd/"$APP_BINARY"Server
+  git mv ./cmd/template4YourProjectNameServer ./cmd/"$APP_NAME"Server
 fi
 if [[ -f "./pkg/template4gopackage" ]]; then
   echo "Renaming pkg directories and files..."
@@ -84,7 +82,6 @@ find . -type f \
   \( -name '*.go' -o -name 'go.mod' -o -name '*.yaml' -o -name '*.yml' -o -name '*.proto' -o -name 'Dockerfile' -o -name 'Makefile' -o -name '*.md' -o -wholename 'scripts/buf_generate.sh' -o -name '*.env*' -o -name '*.sql' \) \
   ! -path './.git/*' ! -path './gen/*' \
   -print0 | xargs -0 sed "${SED_INPLACE[@]}" \
-    -e "s|template4YourProjectNameServer|$APP_BINARY|g" \
     -e "s|github.com/your-github-account/template-4-your-project-name|$REPOSITORY|g" \
     -e "s|template4gopackage|$APP_GO_PACKAGE|g" \
     -e "s|Template4ServiceName|$APP_SERVICE_NAME|g" \

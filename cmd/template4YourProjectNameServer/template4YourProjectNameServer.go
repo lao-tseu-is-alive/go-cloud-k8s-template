@@ -28,8 +28,8 @@ import (
 	"github.com/lao-tseu-is-alive/go-cloud-k8s-common-libs/pkg/metadata"
 	"github.com/lao-tseu-is-alive/go-cloud-k8s-common-libs/pkg/tools"
 	"github.com/prometheus/client_golang/prometheus"
-	"github.com/your-github-account/template-4-your-project-name/gen/template_4_your_project_name/v1/template_4_your_project_namev1connect"
-	"github.com/your-github-account/template-4-your-project-name/pkg/template_4_your_project_name"
+	"github.com/your-github-account/template-4-your-project-name/gen/template4gopackage/v1/template4gopackagev1connect"
+	"github.com/your-github-account/template-4-your-project-name/pkg/template4gopackage"
 	"github.com/your-github-account/template-4-your-project-name/pkg/version"
 )
 
@@ -173,13 +173,13 @@ func initMetadataOrFail(db database.DB, l *slog.Logger) {
 	metaDataCtx, metaDataCancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer metaDataCancel()
 	metadataService.CreateMetadataTableOrFail(metaDataCtx)
-	found, ver := metadataService.GetServiceVersionOrFail(metaDataCtx, version.APP)
+	found, ver := metadataService.GetServiceVersionOrFail(metaDataCtx, version.AppName)
 	if found {
-		l.Info("retrieved service", "app", version.APP, "version", ver, "status", "found")
+		l.Info("retrieved service", "app", version.AppName, "version", ver, "status", "found")
 	} else {
-		l.Info("impossible to retrieved service", "app", version.APP, "version", ver, "status", "not found")
+		l.Info("impossible to retrieved service", "app", version.AppName, "version", ver, "status", "not found")
 	}
-	metadataService.SetServiceVersionOrFail(metaDataCtx, version.APP, version.VERSION)
+	metadataService.SetServiceVersionOrFail(metaDataCtx, version.AppName, version.Version)
 }
 
 func runMigrationsOrFail(dbDsn string) {
@@ -213,10 +213,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("💥💥 error getting log level: %v'\n", err)
 	}
-	l := golog.NewLogger("simple", logWriter, logLevel, version.APP)
-	l.Info("🚀 Starting", "app", version.APP, "version", version.VERSION, "revision", version.REVISION, "build", version.BuildStamp, "repository", version.REPOSITORY)
+	l := golog.NewLogger("simple", logWriter, logLevel, version.AppName)
+	l.Info("🚀 Starting", "app", version.AppName, "version", version.Version, "revision", version.Revision, "build", version.BuildStamp, "repository", version.REPOSITORY)
 
-	dbDsn, err := config.GetPgDbDsnUrl(defaultDBIp, defaultDBPort, tools.ToSnakeCase(version.APP), version.AppSnake, defaultDBSslMode)
+	dbDsn, err := config.GetPgDbDsnUrl(defaultDBIp, defaultDBPort, tools.ToSnakeCase(version.AppName), version.AppNameSnake, defaultDBSslMode)
 	if err != nil {
 		l.Error("💥💥 error getting database DSN", "error", err)
 		os.Exit(1)
@@ -249,16 +249,16 @@ func main() {
 	jwtStatusUrl := config.GetJwtStatusUrl(defaultJwtStatusUrl)
 
 	myVersionReader := goHttpEcho.NewSimpleVersionReader(
-		version.APP,
-		version.VERSION,
-		version.REPOSITORY,
-		version.REVISION,
+		version.AppName,
+		version.Version,
+		version.Repository,
+		version.Revision,
 		version.BuildStamp,
 		jwtAuthUrl,
 		jwtStatusUrl,
 	)
 	// Create a new JWT checker
-	myJwt, err := goHttpEcho.GetNewJwtCheckerFromConfig(version.APP, 60, l)
+	myJwt, err := goHttpEcho.GetNewJwtCheckerFromConfig(version.AppName, 60, l)
 	if err != nil {
 		l.Error("💥💥 error creating JWT checker", "error", err)
 		os.Exit(1)
@@ -316,7 +316,7 @@ func main() {
 	// begin prometheus stuff to create a custom counter metric
 	customCounter := prometheus.NewCounter( // create new counter metric. This is replacement for `prometheus.Metric` struct
 		prometheus.CounterOpts{
-			Name: fmt.Sprintf("%s_custom_requests_total", version.APP),
+			Name: fmt.Sprintf("%s_custom_requests_total", version.AppName),
 			Help: "How many HTTP requests processed, partitioned by status code and HTTP method.",
 		},
 	)
@@ -333,7 +333,7 @@ func main() {
 		Skipper: func(c echo.Context) bool {
 			return strings.HasPrefix(c.Path(), "/health")
 		},
-		Subsystem: version.APP,
+		Subsystem: version.AppName,
 	}
 	e.Use(echoprometheus.NewMiddlewareWithConfig(mwConfig)) // adds middleware to gather metrics
 	// end prometheus stuff to create a custom counter metric
@@ -357,10 +357,10 @@ func main() {
 
 	dbStorageCtx, dbStorageCancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer dbStorageCancel()
-	template_4_your_project_nameStore := template4gopackage.GetStorageInstanceOrPanic(dbStorageCtx, "pgx", db, l)
+	template4gopackageStore := template4gopackage.GetStorageInstanceOrPanic(dbStorageCtx, "pgx", db, l)
 
 	// Create business service (transport-agnostic)
-	template_4_your_project_nameBusinessService := template4gopackage.NewBusinessService(template_4_your_project_nameStore, db, l, 50)
+	template4gopackageBusinessService := template4gopackage.NewBusinessService(template4gopackageStore, db, l, 50)
 
 	// ---------------------------------------------------------
 	// Connect + Vanguard: REST/gRPC/Connect transcoding
@@ -370,26 +370,26 @@ func main() {
 	interceptors := connect.WithInterceptors(authInterceptor)
 
 	// Create Connect servers (auth is handled by interceptor, not servers)
-	template_4_your_project_nameConnectServer := template4gopackage.Newtemplate4YourProjectNameConnectServer(template_4_your_project_nameBusinessService, l)
-	typetemplate4YourProjectNameConnectServer := template4gopackage.NewTypetemplate4YourProjectNameConnectServer(template_4_your_project_nameBusinessService, l)
+	template4gopackageConnectServer := template4gopackage.NewTemplate4ServiceNameConnectServer(template4gopackageBusinessService, l)
+	typetemplate4YourProjectNameConnectServer := template4gopackage.NewTypeTemplate4ServiceNameConnectServer(template4gopackageBusinessService, l)
 
 	// Create service handlers with auth interceptor
-	_, template_4_your_project_nameHandler := template_4_your_project_namev1connect.Newtemplate4YourProjectNameServiceHandler(template_4_your_project_nameConnectServer, interceptors)
-	_, typetemplate4YourProjectNameHandler := template_4_your_project_namev1connect.NewTypetemplate4YourProjectNameServiceHandler(typetemplate4YourProjectNameConnectServer, interceptors)
+	_, template4gopackageHandler := template4gopackagev1connect.NewTemplate4ServiceNameServiceHandler(template4gopackageConnectServer, interceptors)
+	_, typetemplate4YourProjectNameHandler := template4gopackagev1connect.NewTypeTemplate4ServiceNameServiceHandler(typetemplate4YourProjectNameConnectServer, interceptors)
 
 	// Create Vanguard services for HTTP transcoding
-	template_4_your_project_nameService := vanguard.NewService(
-		template_4_your_project_namev1connect.template4YourProjectNameServiceName,
-		template_4_your_project_nameHandler,
+	template4gopackageService := vanguard.NewService(
+		template4gopackagev1connect.template4YourProjectNameServiceName,
+		template4gopackageHandler,
 	)
 	typetemplate4YourProjectNameService := vanguard.NewService(
-		template_4_your_project_namev1connect.Typetemplate4YourProjectNameServiceName,
+		template4gopackagev1connect.Typetemplate4YourProjectNameServiceName,
 		typetemplate4YourProjectNameHandler,
 	)
 
 	// Create transcoder for REST + gRPC + Connect
 	transcoder, err := vanguard.NewTranscoder([]*vanguard.Service{
-		template_4_your_project_nameService,
+		template4gopackageService,
 		typetemplate4YourProjectNameService,
 	})
 	if err != nil {
@@ -399,17 +399,17 @@ func main() {
 
 	// Mount transcoder into Echo with /goapi/v1 prefix
 	// The transcoder handles REST endpoints defined in proto:
-	// - GET /template_4_your_project_name, POST /template_4_your_project_name, etc. (defined in proto HTTP annotations)
-	// - Connect endpoints: /template_4_your_project_name.v1.template4YourProjectNameService/*
+	// - GET /template4gopackage, POST /template4gopackage, etc. (defined in proto HTTP annotations)
+	// - Connect endpoints: /template4gopackage.v1.template4YourProjectNameService/*
 	//
 	// We strip the /goapi/v1 prefix before passing to transcoder
 	transcoderWithPrefix := http.StripPrefix(defaultSecuredApi, transcoder)
 
-	e.Any(defaultSecuredApi+"/template_4_your_project_name*", echo.WrapHandler(transcoderWithPrefix))
+	e.Any(defaultSecuredApi+"/template4gopackage*", echo.WrapHandler(transcoderWithPrefix))
 	e.Any(defaultSecuredApi+"/types*", echo.WrapHandler(transcoderWithPrefix))
 
 	// Connect RPC endpoints (no prefix stripping needed)
-	e.Any("/template_4_your_project_name.v1.*", echo.WrapHandler(transcoder))
+	e.Any("/template4gopackage.v1.*", echo.WrapHandler(transcoder))
 
 	l.Info("🚀 Connect+Vanguard handlers mounted for REST/gRPC transcoding", "securedUrl", defaultSecuredApi)
 
