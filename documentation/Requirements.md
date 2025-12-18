@@ -12,31 +12,31 @@ The application should be usable as a _web app_ and use the
 
 ### Functional requirements (FR)
 
-1. Allow CRUD operation on Thing.
-2. List Things filtering by type and creator.
-3. Search Things by keywords, type, creator.
-4. Allow retrieving a Thing by an external Id.
-5. Restrict Thing Create,Modify and Delete to some groups/roles by Type of Things, and for specific Thing.
-6. Get number (count) of Things by type.
-7. Allow CRUD operation on TypeThing.
-8. List TypeThing filtering by creator.
-9. Restrict TypeThing Create,Modify and Delete to some the role Thing Administrator.
-10. Get number (count) of TypeThings by type.
-11. Keep automatically track of when and who creates a Thing.
-12. Keep automatically track of when was done the last modification to a Thing and who has done it
-13. Keep automatically track of when and who  deletes a Thing, mark the Thing as deleted but do not remove the record from the database. The usual list and search should not return a record of Thing marked for deletion
-14. Include the position of a thing  in Swiss Coordinates in the Thing attributes
-15. Include the current status of a Thing as an Enum attribute
-16. Allow a record of a Thing to be "inactive"
-17. Keep track of when and who someone mark a Thing as inactive, allow to enter an inactivation reason
-18. Allow a record of a Thing to be "validated"
-19. Keep track of when and who someone validates a Thing
-20. Allow a Thing to have an attribute managed_by
-21. Keep automatically track of when and who creates a TypeThing.
-22. Keep automatically track of when was done the last modification to a TypeThing and who has done it
-23. Keep automatically track of when and who  deletes a TypeThing, mark the Thing as deleted but do not remove the record from the database. The usual list and search should not return a record of TypeThing marked for deletion.
-24. Allow a record of a TypeThing to be "inactive"
-25. Keep track of when and who someone mark a TypeThing as inactive, allow to enter an inactivation reason
+1. Allow CRUD operation on template4YourProjectName.
+2. List template4YourProjectNames filtering by type and creator.
+3. Search template4YourProjectNames by keywords, type, creator.
+4. Allow retrieving a template4YourProjectName by an external Id.
+5. Restrict template4YourProjectName Create,Modify and Delete to some groups/roles by Type of template4YourProjectNames, and for specific template4YourProjectName.
+6. Get number (count) of template4YourProjectNames by type.
+7. Allow CRUD operation on Typetemplate4YourProjectName.
+8. List Typetemplate4YourProjectName filtering by creator.
+9. Restrict Typetemplate4YourProjectName Create,Modify and Delete to some the role template4YourProjectName Administrator.
+10. Get number (count) of Typetemplate4YourProjectNames by type.
+11. Keep automatically track of when and who creates a template4YourProjectName.
+12. Keep automatically track of when was done the last modification to a template4YourProjectName and who has done it
+13. Keep automatically track of when and who  deletes a template4YourProjectName, mark the template4YourProjectName as deleted but do not remove the record from the database. The usual list and search should not return a record of template4YourProjectName marked for deletion
+14. Include the position of a template_4_your_project_name  in Swiss Coordinates in the template4YourProjectName attributes
+15. Include the current status of a template4YourProjectName as an Enum attribute
+16. Allow a record of a template4YourProjectName to be "inactive"
+17. Keep track of when and who someone mark a template4YourProjectName as inactive, allow to enter an inactivation reason
+18. Allow a record of a template4YourProjectName to be "validated"
+19. Keep track of when and who someone validates a template4YourProjectName
+20. Allow a template4YourProjectName to have an attribute managed_by
+21. Keep automatically track of when and who creates a Typetemplate4YourProjectName.
+22. Keep automatically track of when was done the last modification to a Typetemplate4YourProjectName and who has done it
+23. Keep automatically track of when and who  deletes a Typetemplate4YourProjectName, mark the template4YourProjectName as deleted but do not remove the record from the database. The usual list and search should not return a record of Typetemplate4YourProjectName marked for deletion.
+24. Allow a record of a Typetemplate4YourProjectName to be "inactive"
+25. Keep track of when and who someone mark a Typetemplate4YourProjectName as inactive, allow to enter an inactivation reason
 
 ### System requirements (SR)
 
